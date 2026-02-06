@@ -4,6 +4,7 @@
 #include <string>
 #include "numericFMT.h"
 
-numericFMT parseType(std::string typeString);
+numericFMT parseTypeOption(const std::string& typeString);
+numericFMT detectType(const std::string& inputNum);
 
 #endif

@@ -14,3 +14,8 @@ constexpr int ALL_OK            = 0;
 constexpr int INVLD_ARG_CNT_ERR = 1;
 constexpr int INVLD_ARG_ERR     = 2;
 constexpr int INVLD_FMT_ERR     = 3;
+
+// Prefixes
+constexpr char BIN_PREFIX[] = "0b";
+constexpr char OCT_PREFIX[] = "0o";
+constexpr char HEX_PREFIX[] = "0x";
