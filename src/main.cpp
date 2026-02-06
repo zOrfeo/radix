@@ -10,23 +10,23 @@
 
 int main (int argc, char *argv[]) {
     int opt;
-    format iBase = format::DEC,oBase = format::DEC;
-    bool autoDetectIBase = true;
+    format inFmt = format::DEC,outFmt = format::DEC;
+    bool autoDetectinFmt = true;
 
     // GetOpts
     while ((opt = getopt(argc, argv, "i:o:")) != -1) {
         switch(opt) {
             case 'i':
-                iBase = parseOptarg(optarg);
-                if (iBase == format::UNK) {
+                inFmt = parseOptarg(optarg);
+                if (inFmt == format::UNK) {
                     std::cerr << "Unknown format option {" << optarg << "}" << std::endl;
                     return INVLD_ARG_ERR;
                 }
-                autoDetectIBase = false;
+                autoDetectinFmt = false;
                 break;
             case 'o':
-                oBase = parseOptarg(optarg);
-                if (oBase == format::UNK) {
+                outFmt = parseOptarg(optarg);
+                if (outFmt == format::UNK) {
                     std::cerr << "Unknown format option {" << optarg << "}" << std::endl;
                     return INVLD_ARG_ERR;
                 }
@@ -38,22 +38,22 @@ int main (int argc, char *argv[]) {
     }
     std::string inputNum = argv[argc-1];
 
-    if (autoDetectIBase) {
-        iBase = detectType(inputNum);
+    if (autoDetectinFmt) {
+        inFmt = detectType(inputNum);
 
-        if (iBase != format::DEC) inputNum = inputNum.substr(2);
+        if (inFmt != format::DEC) inputNum = inputNum.substr(2);
     }
 
     // Validate Input
-    int validationRC = validateInput(inputNum, iBase);
+    int validationRC = validateInput(inputNum, inFmt);
 
     if (validationRC != ALL_OK) {
         const char* numberTypeStrings[] = { "BINARY", "OCTAL", "DECIMAL", "HEXADECIMAL", "UNKNOWN" };
-        std::cerr << "Invalid " << numberTypeStrings[static_cast<int>(iBase)] << " >> " << inputNum << std::endl;
+        std::cerr << "Invalid " << numberTypeStrings[static_cast<int>(inFmt)] << " >> " << inputNum << std::endl;
         return validationRC;
     }
 
-    if (iBase == oBase) {
+    if (inFmt == outFmt) {
         std::cout << inputNum << std::endl;
     }
     return ALL_OK;
