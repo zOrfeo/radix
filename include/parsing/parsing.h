@@ -2,9 +2,9 @@
 #define PARSING_H
 
 #include <string>
-#include "numericFMT.h"
+#include "format.h"
 
-numericFMT parseTypeOption(const std::string& typeString);
-numericFMT detectType(const std::string& inputNum);
+format parseOptarg(const std::string& typeString);
+format detectType(const std::string& inputNum);
 
 #endif

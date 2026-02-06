@@ -1,41 +1,41 @@
-#include "numericFMT.h"
+#include "format.h"
 #include <string>
 #include <unordered_map>
 #include "constants.h"
 
-numericFMT parseTypeOption(const std::string& typeString) {
+format parseOptarg(const std::string& typeString) {
 
-    static const std::unordered_map<std::string, numericFMT> baseLookup = {
-        {"h",   numericFMT::HEX},
-        {"hex", numericFMT::HEX},
-        {"16",  numericFMT::HEX},
+    static const std::unordered_map<std::string, format> baseLookup = {
+        {"h",   format::HEX},
+        {"hex", format::HEX},
+        {"16",  format::HEX},
 
-        {"d",   numericFMT::DEC},
-        {"dec", numericFMT::DEC},
-        {"10",  numericFMT::DEC},
+        {"d",   format::DEC},
+        {"dec", format::DEC},
+        {"10",  format::DEC},
 
-        {"o",   numericFMT::OCT},
-        {"oct", numericFMT::OCT},
-        {"8",   numericFMT::OCT},
+        {"o",   format::OCT},
+        {"oct", format::OCT},
+        {"8",   format::OCT},
 
-        {"b",   numericFMT::BIN},
-        {"bin", numericFMT::BIN},
-        {"2",   numericFMT::BIN},
+        {"b",   format::BIN},
+        {"bin", format::BIN},
+        {"2",   format::BIN},
     };
 
     if (auto format = baseLookup.find(typeString); format != baseLookup.end()) return format->second;
 
-    return numericFMT::UNK;
+    return format::UNK;
 }
 
-numericFMT detectType(const std::string& inputNum) {
+format detectType(const std::string& inputNum) {
 
-    if (inputNum[0] != CHAR_ZERO) return numericFMT::DEC;
+    if (inputNum[0] != CHAR_ZERO) return format::DEC;
 
     switch(inputNum[1]) {
-        case 'b': return numericFMT::BIN;
-        case 'o': return numericFMT::OCT;
-        case 'x': return numericFMT::HEX;
-        default:  return numericFMT::DEC;
+        case 'b': return format::BIN;
+        case 'o': return format::OCT;
+        case 'x': return format::HEX;
+        default:  return format::DEC;
     }
 }

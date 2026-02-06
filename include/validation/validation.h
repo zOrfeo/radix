@@ -2,8 +2,8 @@
 #define VALIDATION_H
 
 #include <string>
-#include "numericFMT.h"
+#include "format.h"
 
-int validateInput(std::string& inputNum, numericFMT fmt);
+int validateInput(std::string& inputNum, format fmt);
 
 #endif
