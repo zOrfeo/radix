@@ -7,6 +7,7 @@
 #include "parsing/parsing.h"
 #include "validation/validation.h"
 #include "constants.h"
+#include "conversion/conversion.h"
 
 int main (int argc, char *argv[]) {
     int opt;
@@ -17,7 +18,7 @@ int main (int argc, char *argv[]) {
     while ((opt = getopt(argc, argv, "i:o:")) != -1) {
         switch(opt) {
             case 'i':
-                inBase = parseBase(optarg);
+                inBase = parseBaseOption(optarg);
                 if (inBase == Base::UNKNOWN) {
                     std::cerr << "Unknown base {" << optarg << "}" << std::endl;
                     return INVLD_ARG_ERR;
@@ -25,7 +26,7 @@ int main (int argc, char *argv[]) {
                 srcFlagSet = true;
                 break;
             case 'o':
-                outBase = parseBase(optarg);
+                outBase = parseBaseOption(optarg);
                 if (outBase == Base::UNKNOWN) {
                     std::cerr << "Unknown base {" << optarg << "}" << std::endl;
                     return INVLD_ARG_ERR;
@@ -85,6 +86,12 @@ int main (int argc, char *argv[]) {
 
     if (inBase == outBase) {
         std::cout << inputNum << std::endl;
+        return ALL_OK;
     }
+
+    int decimalNumber;
+    if (inBase != Base::DECIMAL) decimalNumber = convertFromBase(inputNum,inBase);
+
+    std::cout << decimalNumber << std::endl;
     return ALL_OK;
 }

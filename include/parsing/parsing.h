@@ -4,7 +4,8 @@
 #include <string>
 #include "base.h"
 
-Base parseBase(const std::string& typeString);
+Base parseBaseOption(const std::string& typeString);
 BasePrefix detectPrefix(const std::string& inputNum);
+int parseBaseToInt(const Base base);
 
 #endif

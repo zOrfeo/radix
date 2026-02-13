@@ -9,6 +9,7 @@ set(SOURCES
     src/main.cpp
     src/parsing/parsing.cpp
     src/validation/validation.cpp
+    src/conversion/conversion.cpp
 )
 
 set(HEADERS
@@ -16,6 +17,7 @@ set(HEADERS
     include/base.h
     include/parsing/parsing.h
     include/validation/validation.h
+    include/conversion/conversion.h
 )
 
 # Create executable

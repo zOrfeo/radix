@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include "constants.h"
 
-Base parseBase(const std::string& typeString) {
+Base parseBaseOption(const std::string& typeString) {
 
     static const std::unordered_map<std::string, Base> baseLookup = {
         {"h",   Base::HEXADECIMAL},
@@ -43,5 +43,14 @@ BasePrefix detectPrefix(const std::string& inputNum) {
         return BasePrefix::NONE;
     } else {
         return BasePrefix::UNKNOWN;
+    }
+}
+
+int parseBaseToInt(const Base base) {
+    switch(base) {
+        case Base::BINARY: return BASE_BINARY;
+        case Base::OCTAL: return BASE_OCTAL;
+        case Base::HEXADECIMAL: return BASE_HEXADECIMAL;
+        default: return BASE_DECIMAL;
     }
 }
