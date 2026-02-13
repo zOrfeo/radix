@@ -42,15 +42,22 @@ int main (int argc, char *argv[]) {
 
     if (prfx == BasePrefix::UNKNOWN) {
         std::cerr << "Invalid Prefix " << inputNum.substr(0,2) << std::endl;
+        return INVLD_PFX_ERR;
     }
 
     if (prfx != BasePrefix::NONE) inputNum = inputNum.substr(2);
 
     if (!srcFlagSet) {
         switch (prfx) {
-            case BasePrefix::BINARY:      inBase = Base::BINARY;
-            case BasePrefix::OCTAL:       inBase = Base::OCTAL;
+            case BasePrefix::BINARY: inBase = Base::BINARY;
+                break;
+
+            case BasePrefix::OCTAL: inBase = Base::OCTAL;
+                break;
+
             case BasePrefix::HEXADECIMAL: inBase = Base::HEXADECIMAL;
+                break;
+
             default: inBase = Base::DECIMAL;
         }
     }
@@ -58,9 +65,15 @@ int main (int argc, char *argv[]) {
     // Validate Input
     int validationRC;
     switch (inBase) {
-        case Base::BINARY:      validationRC = validateBinary(inputNum);
-        case Base::OCTAL:       validationRC = validateOctal(inputNum);
+        case Base::BINARY: validationRC = validateBinary(inputNum);
+            break;
+
+        case Base::OCTAL: validationRC = validateOctal(inputNum);
+            break;
+
         case Base::HEXADECIMAL: validationRC = validateHexadecimal(inputNum);
+            break;
+
         default: validationRC = validateDecimal(inputNum);
     }
 
