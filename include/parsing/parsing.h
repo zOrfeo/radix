@@ -2,9 +2,9 @@
 #define PARSING_H
 
 #include <string>
-#include "format.h"
+#include "base.h"
 
-format parseOptarg(const std::string& typeString);
-format detectType(const std::string& inputNum);
+Base parseBase(const std::string& typeString);
+BasePrefix detectPrefix(const std::string& inputNum);
 
 #endif

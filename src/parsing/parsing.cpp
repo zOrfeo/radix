@@ -1,41 +1,47 @@
-#include "format.h"
+#include "base.h"
 #include <string>
 #include <unordered_map>
 #include "constants.h"
 
-format parseOptarg(const std::string& typeString) {
+Base parseBase(const std::string& typeString) {
 
-    static const std::unordered_map<std::string, format> baseLookup = {
-        {"h",   format::HEX},
-        {"hex", format::HEX},
-        {"16",  format::HEX},
+    static const std::unordered_map<std::string, Base> baseLookup = {
+        {"h",   Base::HEXADECIMAL},
+        {"hex", Base::HEXADECIMAL},
+        {"16",  Base::HEXADECIMAL},
 
-        {"d",   format::DEC},
-        {"dec", format::DEC},
-        {"10",  format::DEC},
+        {"d",   Base::DECIMAL},
+        {"dec", Base::DECIMAL},
+        {"10",  Base::DECIMAL},
 
-        {"o",   format::OCT},
-        {"oct", format::OCT},
-        {"8",   format::OCT},
+        {"o",   Base::OCTAL},
+        {"oct", Base::OCTAL},
+        {"8",   Base::OCTAL},
 
-        {"b",   format::BIN},
-        {"bin", format::BIN},
-        {"2",   format::BIN},
+        {"b",   Base::BINARY},
+        {"bin", Base::BINARY},
+        {"2",   Base::BINARY},
     };
 
-    if (auto format = baseLookup.find(typeString); format != baseLookup.end()) return format->second;
+    if (auto base = baseLookup.find(typeString); base != baseLookup.end()) return base->second;
 
-    return format::UNK;
+    return Base::UNKNOWN;
 }
 
-format detectType(const std::string& inputNum) {
+BasePrefix detectPrefix(const std::string& inputNum) {
+    if (inputNum.size() < 2) return BasePrefix::NONE;
 
-    if (inputNum[0] != CHAR_ZERO) return format::DEC;
+    if  (inputNum[0] != CHAR_ZERO) return BasePrefix::NONE;
 
     switch(inputNum[1]) {
-        case 'b': return format::BIN;
-        case 'o': return format::OCT;
-        case 'x': return format::HEX;
-        default:  return format::DEC;
+        case CHAR_b: return BasePrefix::BINARY;
+        case CHAR_o: return BasePrefix::OCTAL;
+        case CHAR_x: return BasePrefix::HEXADECIMAL;
+    }
+
+    if (inputNum[1] >= CHAR_ZERO && inputNum[1] <= CHAR_NINE) {
+        return BasePrefix::NONE;
+    } else {
+        return BasePrefix::UNKNOWN;
     }
 }

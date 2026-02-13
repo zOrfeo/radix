@@ -2,8 +2,11 @@
 #define VALIDATION_H
 
 #include <string>
-#include "format.h"
+#include "base.h"
 
-int validateInput(std::string& inputNum, format fmt);
+int validateBinary(std::string& inputNum);
+int validateOctal(std::string& inputNum);
+int validateDecimal(std::string& inputNum);
+int validateHexadecimal(std::string& inputNum);
 
 #endif
