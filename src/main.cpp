@@ -12,10 +12,10 @@
 int main (int argc, char *argv[]) {
     int opt;
     Base inBase = Base::DECIMAL,outBase = Base::DECIMAL;
-    bool srcFlagSet = false;
+    bool srcFlagSet = false, applyOutputPrefix=false;;
 
     // GetOpts
-    while ((opt = getopt(argc, argv, "i:o:")) != -1) {
+    while ((opt = getopt(argc, argv, "i:o:p")) != -1) {
         switch(opt) {
             case 'i':
                 inBase = parseBaseOption(optarg);
@@ -25,6 +25,7 @@ int main (int argc, char *argv[]) {
                 }
                 srcFlagSet = true;
                 break;
+
             case 'o':
                 outBase = parseBaseOption(optarg);
                 if (outBase == Base::UNKNOWN) {
@@ -32,6 +33,11 @@ int main (int argc, char *argv[]) {
                     return INVLD_ARG_ERR;
                 }
                 break;
+
+            case 'p':
+                applyOutputPrefix = true;
+                break;
+
             default:
                 std::cerr << "Unknown option {" << optarg << "}" << std::endl;
                 return INVLD_ARG_ERR;
@@ -103,6 +109,21 @@ int main (int argc, char *argv[]) {
         outputNumber = std::to_string(decimalNumber);
     }
 
-    std::cout << outputNumber << std::endl;
+    std::string outPrefix = "";
+    if (applyOutputPrefix) {
+        switch (outBase) {
+            case Base::BINARY: outPrefix = "0b";
+                break;
+
+            case Base::OCTAL: outPrefix = "0o";
+                break;
+
+            case Base::HEXADECIMAL: outPrefix = "0x";
+                break;
+
+            default: outPrefix = "";
+        }
+    }
+    std::cout << outPrefix << outputNumber << std::endl;
     return ALL_OK;
 }

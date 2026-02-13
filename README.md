@@ -5,9 +5,9 @@ Radix is a CLI tool to convert numbers between binary, octal, decimal and hexade
 ## Usage
 
 ```bash
-./radix -i dec -o hex 111
+radix -i dec -o hex -p 111
 ```
-Radix accepts 2 optional flags, -i and -o, to set the input and output base. If either flag is not provided, that option defaults to DECIMAL.
+Radix accepts 3 optional flags. -i and -o set the input and output base respectively. If either flag is not provided, that option defaults to DECIMAL. -p will cause the output to be prepended with an appropriate prefix (see below in Base Autodetection)
 
 The number to be converted must appear as the last argument.
 
