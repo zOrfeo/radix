@@ -21,7 +21,7 @@ For octal, the accepted values are `oct, o, 8`
 
 For decimal, the accepted values are `dec, d, 10`
 
-FOr hexadecimal, the accepted values are `hex, h, 16`
+For hexadecimal, the accepted values are `hex, h, 16`
 
 All other values will result in validation failure.
 
@@ -29,9 +29,9 @@ All other values will result in validation failure.
 
 Non-Decimal numbers can be represented using a prefix:
 
-Binary -> 0b
-Octal  -> 0o
-Hex    -> 0x
+- Binary -> 0b
+- Octal  -> 0o
+- Hex    -> 0x
 
 (There is no prefix for decimal numbers as this is the assumed default base)
 
