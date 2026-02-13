@@ -40,7 +40,7 @@ int main (int argc, char *argv[]) {
 
             default:
                 std::cerr << "Unknown option {" << optarg << "}" << std::endl;
-                return INVLD_ARG_ERR;
+                return INVLD_OPT_ERR;
         }
     }
     std::string inputNum = argv[argc-1];

@@ -12,11 +12,11 @@ constexpr int CHAR_o     = 111;
 constexpr int CHAR_x     = 120;
 
 // Return Codes
-constexpr int ALL_OK            = 0;
-constexpr int INVLD_ARG_CNT_ERR = 1;
-constexpr int INVLD_ARG_ERR     = 2;
-constexpr int INVLD_PFX_ERR     = 3;
-constexpr int INVLD_NUM_ERR     = 4;
+constexpr int ALL_OK        = 0;
+constexpr int INVLD_OPT_ERR = 1;
+constexpr int INVLD_ARG_ERR = 2;
+constexpr int INVLD_PFX_ERR = 3;
+constexpr int INVLD_NUM_ERR = 4;
 
 // Bases
 constexpr int BASE_BINARY      = 2;
