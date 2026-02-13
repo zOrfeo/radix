@@ -90,8 +90,19 @@ int main (int argc, char *argv[]) {
     }
 
     int decimalNumber;
-    if (inBase != Base::DECIMAL) decimalNumber = convertFromBase(inputNum,inBase);
+    if (inBase != Base::DECIMAL){
+        decimalNumber = convertFromBase(inputNum,inBase);
+    } else {
+        decimalNumber = stoi(inputNum);
+    }
 
-    std::cout << decimalNumber << std::endl;
+    std::string outputNumber;
+    if (outBase != Base::DECIMAL) {
+        outputNumber = convertToBase(decimalNumber,outBase);
+    } else {
+        outputNumber = std::to_string(decimalNumber);
+    }
+
+    std::cout << outputNumber << std::endl;
     return ALL_OK;
 }
