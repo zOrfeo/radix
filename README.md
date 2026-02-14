@@ -54,11 +54,11 @@ Radix will detect the presence of these prefixes, and use them to determine the 
 
 Radix outputs a series of exit codes depending on the output of the operation. These are as follows:
 
-0 - All Ok (Success).
-1 - Invalid option.
-2 - Provided option argument is invalid.
-3 - Input number has an invalid prefix.
-4 - Input number is invalid.
+0 - All Ok (Success).  
+1 - Invalid option.  
+2 - Provided option argument is invalid.  
+3 - Input number has an invalid prefix.  
+4 - Input number is invalid.  
 
 ## Installation
 

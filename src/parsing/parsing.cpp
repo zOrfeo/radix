@@ -6,21 +6,21 @@
 Base parseBaseOption(const std::string& typeString) {
 
     static const std::unordered_map<std::string, Base> baseLookup = {
-        {"h",   Base::HEXADECIMAL},
-        {"hex", Base::HEXADECIMAL},
-        {"16",  Base::HEXADECIMAL},
+        {"h",   Base::HEX},
+        {"hex", Base::HEX},
+        {"16",  Base::HEX},
 
-        {"d",   Base::DECIMAL},
-        {"dec", Base::DECIMAL},
-        {"10",  Base::DECIMAL},
+        {"d",   Base::DEC},
+        {"dec", Base::DEC},
+        {"10",  Base::DEC},
 
-        {"o",   Base::OCTAL},
-        {"oct", Base::OCTAL},
-        {"8",   Base::OCTAL},
+        {"o",   Base::OCT},
+        {"oct", Base::OCT},
+        {"8",   Base::OCT},
 
-        {"b",   Base::BINARY},
-        {"bin", Base::BINARY},
-        {"2",   Base::BINARY},
+        {"b",   Base::BIN},
+        {"bin", Base::BIN},
+        {"2",   Base::BIN},
     };
 
     if (auto base = baseLookup.find(typeString); base != baseLookup.end()) return base->second;
@@ -34,9 +34,9 @@ BasePrefix detectPrefix(const std::string& inputNum) {
     if  (inputNum[0] != CHAR_ZERO) return BasePrefix::NONE;
 
     switch(inputNum[1]) {
-        case CHAR_b: return BasePrefix::BINARY;
-        case CHAR_o: return BasePrefix::OCTAL;
-        case CHAR_x: return BasePrefix::HEXADECIMAL;
+        case CHAR_b: return BasePrefix::BIN;
+        case CHAR_o: return BasePrefix::OCT;
+        case CHAR_x: return BasePrefix::HEX;
     }
 
     if (inputNum[1] >= CHAR_ZERO && inputNum[1] <= CHAR_NINE) {
@@ -48,9 +48,9 @@ BasePrefix detectPrefix(const std::string& inputNum) {
 
 int parseBaseToInt(const Base base) {
     switch(base) {
-        case Base::BINARY: return BASE_BINARY;
-        case Base::OCTAL: return BASE_OCTAL;
-        case Base::HEXADECIMAL: return BASE_HEXADECIMAL;
-        default: return BASE_DECIMAL;
+        case Base::BIN: return BASE_BIN;
+        case Base::OCT: return BASE_OCT;
+        case Base::HEX: return BASE_HEX;
+        default: return BASE_DEC;
     }
 }

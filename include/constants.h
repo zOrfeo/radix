@@ -1,5 +1,3 @@
-#include <string>
-
 // ASCII character codes
 constexpr int CHAR_ZERO  = 48;
 constexpr int CHAR_ONE   = 49;
@@ -19,7 +17,7 @@ constexpr int INVLD_PFX_ERR = 3;
 constexpr int INVLD_NUM_ERR = 4;
 
 // Bases
-constexpr int BASE_BINARY      = 2;
-constexpr int BASE_OCTAL       = 8;
-constexpr int BASE_DECIMAL     = 10;
-constexpr int BASE_HEXADECIMAL = 16;
+constexpr int BASE_BIN = 2;
+constexpr int BASE_OCT = 8;
+constexpr int BASE_DEC = 10;
+constexpr int BASE_HEX = 16;

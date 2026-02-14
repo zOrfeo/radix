@@ -11,8 +11,8 @@
 
 int main (int argc, char *argv[]) {
     int opt;
-    Base inBase = Base::DECIMAL,outBase = Base::DECIMAL;
-    bool srcFlagSet = false, applyOutputPrefix=false;;
+    Base inBase = Base::DEC,outBase = Base::DEC;
+    bool srcFlagSet = false, applyOutputPrefix=false;
 
     // GetOpts
     while ((opt = getopt(argc, argv, "i:o:p")) != -1) {
@@ -45,40 +45,41 @@ int main (int argc, char *argv[]) {
     }
     std::string inputNum = argv[argc-1];
 
-    BasePrefix prfx = detectPrefix(inputNum);
+    // Prefix Handling
+    BasePrefix prefix = detectPrefix(inputNum);
 
-    if (prfx == BasePrefix::UNKNOWN) {
+    if (prefix == BasePrefix::UNKNOWN) {
         std::cerr << "Invalid Prefix " << inputNum.substr(0,2) << std::endl;
         return INVLD_PFX_ERR;
     }
 
-    if (prfx != BasePrefix::NONE) inputNum = inputNum.substr(2);
+    if (prefix != BasePrefix::NONE) inputNum = inputNum.substr(2);
 
     if (!srcFlagSet) {
-        switch (prfx) {
-            case BasePrefix::BINARY: inBase = Base::BINARY;
+        switch (prefix) {
+            case BasePrefix::BIN: inBase = Base::BIN;
                 break;
 
-            case BasePrefix::OCTAL: inBase = Base::OCTAL;
+            case BasePrefix::OCT: inBase = Base::OCT;
                 break;
 
-            case BasePrefix::HEXADECIMAL: inBase = Base::HEXADECIMAL;
+            case BasePrefix::HEX: inBase = Base::HEX;
                 break;
 
-            default: inBase = Base::DECIMAL;
+            default: inBase = Base::DEC;
         }
     }
 
     // Validate Input
     int validationRC;
     switch (inBase) {
-        case Base::BINARY: validationRC = validateBinary(inputNum);
+        case Base::BIN: validationRC = validateBinary(inputNum);
             break;
 
-        case Base::OCTAL: validationRC = validateOctal(inputNum);
+        case Base::OCT: validationRC = validateOctal(inputNum);
             break;
 
-        case Base::HEXADECIMAL: validationRC = validateHexadecimal(inputNum);
+        case Base::HEX: validationRC = validateHexadecimal(inputNum);
             break;
 
         default: validationRC = validateDecimal(inputNum);
@@ -90,20 +91,21 @@ int main (int argc, char *argv[]) {
         return validationRC;
     }
 
+    // Conversion & Output
     if (inBase == outBase) {
         std::cout << inputNum << std::endl;
         return ALL_OK;
     }
 
     int decimalNumber;
-    if (inBase != Base::DECIMAL){
+    if (inBase != Base::DEC){
         decimalNumber = convertFromBase(inputNum,inBase);
     } else {
         decimalNumber = stoi(inputNum);
     }
 
     std::string outputNumber;
-    if (outBase != Base::DECIMAL) {
+    if (outBase != Base::DEC) {
         outputNumber = convertToBase(decimalNumber,outBase);
     } else {
         outputNumber = std::to_string(decimalNumber);
@@ -112,13 +114,13 @@ int main (int argc, char *argv[]) {
     std::string outPrefix = "";
     if (applyOutputPrefix) {
         switch (outBase) {
-            case Base::BINARY: outPrefix = "0b";
+            case Base::BIN: outPrefix = "0b";
                 break;
 
-            case Base::OCTAL: outPrefix = "0o";
+            case Base::OCT: outPrefix = "0o";
                 break;
 
-            case Base::HEXADECIMAL: outPrefix = "0x";
+            case Base::HEX: outPrefix = "0x";
                 break;
 
             default: outPrefix = "";

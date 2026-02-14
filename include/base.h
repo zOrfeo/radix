@@ -2,18 +2,18 @@
 #define FORMAT_H
 
 enum class Base {
-    BINARY,
-    OCTAL,
-    DECIMAL,
-    HEXADECIMAL,
+    BIN,
+    OCT,
+    DEC,
+    HEX,
     UNKNOWN
 };
 
 enum class BasePrefix {
-    BINARY,
-    OCTAL,
-    DECIMAL,
-    HEXADECIMAL,
+    BIN,
+    OCT,
+    DEC,
+    HEX,
     UNKNOWN,
     NONE
 };

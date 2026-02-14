@@ -2,7 +2,6 @@
 #define VALIDATION_H
 
 #include <string>
-#include "base.h"
 
 int validateBinary(std::string& inputNum);
 int validateOctal(std::string& inputNum);

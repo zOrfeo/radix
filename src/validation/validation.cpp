@@ -1,6 +1,5 @@
 #include <string>
 #include "constants.h"
-#include "base.h"
 
 int validateBinary(std::string& inputNum) {
     for (char c : inputNum) {
