@@ -8,6 +8,7 @@
 #include "validation/validation.h"
 #include "constants.h"
 #include "conversion/conversion.h"
+#include <climits>
 
 int main (int argc, char *argv[]) {
     int opt;
@@ -101,7 +102,11 @@ int main (int argc, char *argv[]) {
     if (inBase != Base::DEC){
         decimalNumber = convertFromBase(inputNum,inBase);
     } else {
-        decimalNumber = stoi(inputNum);
+        try {
+            decimalNumber = stoi(inputNum);
+        } catch (const std::out_of_range& e) {
+            decimalNumber = INT_MAX;
+        }
     }
 
     std::string outputNumber;

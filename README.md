@@ -77,3 +77,15 @@ Radix requires the following in order to compile & run:
 
 - C++17 compatible compiler
 - CMake 3.16+
+
+## Limits
+Radix currently supports only positive 32bit integers. This means the maximum value that can be fed in is:  
+  
+Binary  -> 1111111111111111111111111111111  
+Octal   -> 17777777777  
+Decimal -> 2147483647  
+Hex     -> 7FFFFFFF  
+
+Negative numbers will currently fail validation.
+
+NB: The data is handled as a 32bit signed integer, even though negative numbers aren't supported. This is why the maximum value that can be handled is 2^31 - 1 (DEC:2147483647). Inputs larger than this will be capped at this value.

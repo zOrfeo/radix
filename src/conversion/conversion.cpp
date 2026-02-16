@@ -3,18 +3,24 @@
 #include "constants.h"
 #include "parsing/parsing.h"
 #include "base.h"
+#include <climits>
 
 int convertFromBase(const std::string& inputNum, const Base base) {
     int baseVal = parseBaseToInt(base);
 
     int decimalNumber = 0;
+    int digit;
     for (char c : inputNum) {
-        decimalNumber *= baseVal;
         if (c >= CHAR_ZERO && c <= CHAR_NINE) {
-            decimalNumber += c - CHAR_ZERO;
+            digit = c - CHAR_ZERO;
         } else {
-            decimalNumber += c - CHAR_A + 10;
+            digit = c - CHAR_A + 10;
         }
+
+        if (decimalNumber > (INT_MAX - digit) / baseVal ) return INT_MAX;
+
+        decimalNumber *= baseVal;
+        decimalNumber += digit;
     }
 
     return decimalNumber;
