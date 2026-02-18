@@ -39,10 +39,14 @@ BasePrefix detectPrefix(const std::string& inputNum) {
         case CHAR_x: return BasePrefix::HEX;
     }
 
-    if (inputNum[1] >= CHAR_ZERO && inputNum[1] <= CHAR_NINE) {
-        return BasePrefix::NONE;
+    if (inputNum[1] < CHAR_ZERO || inputNum[1] > CHAR_NINE) {
+        if (inputNum[1] < CHAR_A || inputNum[1] > CHAR_F) {
+            return BasePrefix::UNKNOWN;
+        } else {
+            return BasePrefix::NONE;
+        }
     } else {
-        return BasePrefix::UNKNOWN;
+        return BasePrefix::NONE;
     }
 }
 

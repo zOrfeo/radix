@@ -89,3 +89,7 @@ Hex     -> 7FFFFFFF
 Negative numbers will currently fail validation.
 
 NB: The data is handled as a 32bit signed integer, even though negative numbers aren't supported. This is why the maximum value that can be handled is 2^31 - 1 (DEC:2147483647). Inputs larger than this will be capped at this value.
+
+### Case sensitivity in inputs
+
+All inputs are case sensitive. For the input number (to be converted) this is because the prefix '0b', used to indicate the number is binary, cannot be distinguished from the lower case hexadecimal number '0b' (DEC:11). Since I deemed it more important to accept leading zeroes on the input than to handle lower case hexadecimal numbers, this restriction became neccesary. It will remain until a solution is found.
