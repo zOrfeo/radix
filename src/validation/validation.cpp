@@ -1,32 +1,32 @@
 #include <string>
 #include "constants.h"
 
-int validateBinary(const std::string& inputNum) {
+bool validateBinary(const std::string& inputNum) {
     for (char c : inputNum) {
-        if (c < CHAR_ZERO || c > CHAR_ONE) {return INVLD_NUM_ERR;}
+        if (c < CHAR_ZERO || c > CHAR_ONE) {return false;}
     }
-    return ALL_OK;
+    return true;
 };
 
-int validateOctal(const std::string& inputNum) {
+bool validateOctal(const std::string& inputNum) {
     for (char c : inputNum) {
-        if (c < CHAR_ZERO || c > CHAR_SEVEN) {return INVLD_NUM_ERR;}
+        if (c < CHAR_ZERO || c > CHAR_SEVEN) {return false;}
     }
-    return ALL_OK;
+    return true;
 };
 
-int validateDecimal(const std::string& inputNum) {
+bool validateDecimal(const std::string& inputNum) {
     for (char c : inputNum) {
-        if (c < CHAR_ZERO || c > CHAR_NINE) {return INVLD_NUM_ERR;}
+        if (c < CHAR_ZERO || c > CHAR_NINE) {return false;}
     }
-    return ALL_OK;
+    return true;
 };
 
-int validateHexadecimal(const std::string& inputNum) {
+bool validateHexadecimal(const std::string& inputNum) {
     for (char c : inputNum) {
         if (c < CHAR_ZERO || c > CHAR_NINE) {
-            if (c < CHAR_A || c > CHAR_F ) {return INVLD_NUM_ERR;}
+            if (c < CHAR_A || c > CHAR_F ) {return false;}
         }
     }
-    return ALL_OK;
+    return true;
 };

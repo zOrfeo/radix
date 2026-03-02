@@ -3,9 +3,9 @@
 
 #include <string>
 
-int validateBinary(const std::string& inputNum);
-int validateOctal(const std::string& inputNum);
-int validateDecimal(const std::string& inputNum);
-int validateHexadecimal(const std::string& inputNum);
+bool validateBinary(const std::string& inputNum);
+bool validateOctal(const std::string& inputNum);
+bool validateDecimal(const std::string& inputNum);
+bool validateHexadecimal(const std::string& inputNum);
 
 #endif

@@ -23,21 +23,19 @@ std::pair<int, std::string> processInput(std::string& inputNum, Base inBase, Bas
         case BasePrefix::UNKNOWN: return {INVLD_PFX_ERR,inputNum};
         default: break;
     }
-
     // Validate Input
-    int validationRC;
     switch (inBase) {
-        case Base::BIN: validationRC = validateBinary(inputNum); break;
-        case Base::OCT: validationRC = validateOctal(inputNum); break;
-        case Base::HEX: validationRC = validateHexadecimal(inputNum); break;
-        default: validationRC = validateDecimal(inputNum); break;
+        case Base::BIN: if (!validateBinary(inputNum)) return {INVLD_NUM_ERR,inputNum}; break;
+        case Base::OCT: if (!validateOctal(inputNum)) return {INVLD_NUM_ERR,inputNum}; break;
+        case Base::HEX: if (!validateHexadecimal(inputNum)) return {INVLD_NUM_ERR,inputNum}; break;
+        default: if (!validateDecimal(inputNum)) return {INVLD_NUM_ERR,inputNum}; break;
     }
 
-    if (validationRC != ALL_OK) {
-        const char* numberTypeStrings[] = { "BINARY", "OCTAL", "DECIMAL", "HEXADECIMAL", "UNKNOWN" };
-        std::cerr << "Invalid " << numberTypeStrings[static_cast<int>(inBase)] << " >> " << inputNum << std::endl;
-        return {validationRC,inputNum};
-    }
+    //if (validationRC != ALL_OK) {
+    //    const char* numberTypeStrings[] = { "BINARY", "OCTAL", "DECIMAL", "HEXADECIMAL", "UNKNOWN" };
+    //    std::cerr << "Invalid " << numberTypeStrings[static_cast<int>(inBase)] << " >> " << inputNum << std::endl;
+    //    return {validationRC,inputNum};
+    //}
 
     // Conversion & Output
     if (inBase == outBase) {
