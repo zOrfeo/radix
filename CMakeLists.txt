@@ -54,6 +54,7 @@ add_executable(unit_tests
     src/conversion/conversion.cpp
     src/parsing/parsing.cpp
     src/validation/validation.cpp
+    src/core/core.cpp
 )
 
 target_include_directories(unit_tests
