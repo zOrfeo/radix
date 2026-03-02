@@ -10,6 +10,7 @@ set(SOURCES
     src/parsing/parsing.cpp
     src/validation/validation.cpp
     src/conversion/conversion.cpp
+    src/core/core.cpp
 )
 
 set(HEADERS
@@ -18,6 +19,7 @@ set(HEADERS
     include/parsing/parsing.h
     include/validation/validation.h
     include/conversion/conversion.h
+    include/core/core.h
 )
 
 # Create executable
@@ -46,6 +48,7 @@ FetchContent_MakeAvailable(Catch2)
 add_executable(unit_tests
     ${HEADERS}
     tests/test_conversion.cpp
+    tests/test_core.cpp
     tests/test_parsing.cpp
     tests/test_validation.cpp
     src/conversion/conversion.cpp

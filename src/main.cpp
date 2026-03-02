@@ -5,15 +5,15 @@
 #include <string>
 #include "base.h"
 #include "parsing/parsing.h"
-#include "validation/validation.h"
 #include "constants.h"
-#include "conversion/conversion.h"
-#include <climits>
+#include "core/core.h"
+#include <iostream>
+#include <unistd.h>
 
 int main (int argc, char *argv[]) {
     int opt;
     Base inBase = Base::DEC,outBase = Base::DEC;
-    bool srcFlagSet = false, applyOutputPrefix=false;
+    bool applyOutputPrefix=false;
 
     // GetOpts
     while ((opt = getopt(argc, argv, "i:o:p")) != -1) {
@@ -24,7 +24,6 @@ int main (int argc, char *argv[]) {
                     std::cerr << "Unknown base {" << optarg << "}" << std::endl;
                     return INVLD_ARG_ERR;
                 }
-                srcFlagSet = true;
                 break;
 
             case 'o':
@@ -44,93 +43,20 @@ int main (int argc, char *argv[]) {
                 return INVLD_OPT_ERR;
         }
     }
-    std::string inputNum = argv[argc-1];
+    std::string inputNum;
+    if (isatty(STDIN_FILENO)) {
+        // If stdin is tty, then input is the last argument.
+        inputNum = argv[argc-1];
+        auto [rc, outputNum] = processInput(inputNum, inBase, outBase);
 
-    // Prefix Handling
-    BasePrefix prefix = detectPrefix(inputNum);
-
-    if (prefix == BasePrefix::UNKNOWN) {
-        std::cerr << "Invalid Prefix " << inputNum.substr(0,2) << std::endl;
-        return INVLD_PFX_ERR;
-    }
-
-    if (prefix != BasePrefix::NONE) inputNum = inputNum.substr(2);
-
-    if (!srcFlagSet) {
-        switch (prefix) {
-            case BasePrefix::BIN: inBase = Base::BIN;
-                break;
-
-            case BasePrefix::OCT: inBase = Base::OCT;
-                break;
-
-            case BasePrefix::HEX: inBase = Base::HEX;
-                break;
-
-            default: inBase = Base::DEC;
-        }
-    }
-
-    // Validate Input
-    int validationRC;
-    switch (inBase) {
-        case Base::BIN: validationRC = validateBinary(inputNum);
-            break;
-
-        case Base::OCT: validationRC = validateOctal(inputNum);
-            break;
-
-        case Base::HEX: validationRC = validateHexadecimal(inputNum);
-            break;
-
-        default: validationRC = validateDecimal(inputNum);
-    }
-
-    if (validationRC != ALL_OK) {
-        const char* numberTypeStrings[] = { "BINARY", "OCTAL", "DECIMAL", "HEXADECIMAL", "UNKNOWN" };
-        std::cerr << "Invalid " << numberTypeStrings[static_cast<int>(inBase)] << " >> " << inputNum << std::endl;
-        return validationRC;
-    }
-
-    // Conversion & Output
-    if (inBase == outBase) {
-        std::cout << inputNum << std::endl;
-        return ALL_OK;
-    }
-
-    int decimalNumber;
-    if (inBase != Base::DEC){
-        decimalNumber = convertFromBase(inputNum,inBase);
+        if (rc != ALL_OK) return rc;
+        std::cout << (applyOutputPrefix ? buildPrefix(outBase) : "") << outputNum << std::endl;
     } else {
-        try {
-            decimalNumber = stoi(inputNum);
-        } catch (const std::out_of_range& e) {
-            decimalNumber = INT_MAX;
+        while (std::getline(std::cin, inputNum)) {
+            auto [rc, outputNum] = processInput(inputNum, inBase, outBase);
+            if (rc != ALL_OK) return rc;
+            std::cout << (applyOutputPrefix ? buildPrefix(outBase) : "") << outputNum << std::endl;
         }
     }
-
-    std::string outputNumber;
-    if (outBase != Base::DEC) {
-        outputNumber = convertToBase(decimalNumber,outBase);
-    } else {
-        outputNumber = std::to_string(decimalNumber);
-    }
-
-    std::string outPrefix = "";
-    if (applyOutputPrefix) {
-        switch (outBase) {
-            case Base::BIN: outPrefix = "0b";
-                break;
-
-            case Base::OCT: outPrefix = "0o";
-                break;
-
-            case Base::HEX: outPrefix = "0x";
-                break;
-
-            default: outPrefix = "";
-        }
-    }
-    std::cout << outPrefix << outputNumber << std::endl;
     return ALL_OK;
 }
