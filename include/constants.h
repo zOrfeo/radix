@@ -1,3 +1,5 @@
+#include <cstdint>
+
 // ASCII character codes
 constexpr int CHAR_ZERO  = 48;
 constexpr int CHAR_ONE   = 49;
@@ -21,3 +23,7 @@ constexpr int BASE_BIN = 2;
 constexpr int BASE_OCT = 8;
 constexpr int BASE_DEC = 10;
 constexpr int BASE_HEX = 16;
+
+// Generic Constants
+constexpr std::uint32_t UINT32_DIV10 = UINT32_MAX / 10;
+constexpr std::uint32_t UINT32_LSD = UINT32_MAX % 10;

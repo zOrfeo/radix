@@ -4,7 +4,9 @@ Radix is a CLI tool to convert numbers between binary, octal, decimal and hexade
 
 ## Usage
 
-Radix accepts 3 optional flags and one mandatory standalone argument (the number to be converted), e.g.
+Radix can convert numbers passed as command line arguments (in which case they must appear as the last argument!) or via stdin. If stdin is a redirected file, Radix will process each line as a separate number to be converted. If input is provided via stdin, Radix will ignore any non-flag command line input.
+
+Radix accepts 3 optional flags:
 
 ```bash
 radix -i bin -o dec 1010
@@ -22,7 +24,7 @@ radix -o hex -p 273
 # Converts Decimal 273 to Hexadecimal 111. Outputs '0x111'.
 ```
 
-The number to be converted must appear as the last argument, but options can be set in any order (the option argument must immediately follow its option).
+Options can be set in any order (but the option argument must immediately follow its option).
 
 NB: The current version of Radix only supports hexadecimal digits A-F in upper case.
 
@@ -48,7 +50,7 @@ Non-Decimal numbers can be represented using a prefix:
 
 (There is no prefix for decimal numbers as this is the assumed default base)
 
-Radix will detect the presence of these prefixes, and use them to determine the input base if the input option is not set. If the input option is set and a contradictory prefix is present, Radix will ignore the prefix and interpret the input number using the base specified by the -i option.
+Radix will detect the presence of these prefixes, and use them to determine the input base. If a prefix is present, Radix will ignore the -i option for that input number and interpret it using the prefix.
 
 ## Exit Codes
 
@@ -79,17 +81,15 @@ Radix requires the following in order to compile & run:
 - CMake 3.16+
 
 ## Limits
-Radix currently supports only positive 32bit integers. This means the maximum value that can be fed in is:  
+Radix currently supports up to (unsigned) 32bit integers. This means the maximum value that can be fed in is:  
   
-Binary  -> 1111111111111111111111111111111  
-Octal   -> 17777777777  
-Decimal -> 2147483647  
-Hex     -> 7FFFFFFF  
+Binary  -> 11111111111111111111111111111111  
+Octal   -> 037777777777  
+Decimal -> 4294967295  
+Hex     -> FFFFFFFF  
 
-Negative numbers will currently fail validation.
-
-NB: The data is handled as a 32bit signed integer, even though negative numbers aren't supported. This is why the maximum value that can be handled is 2^31 - 1 (DEC:2147483647). Inputs larger than this will be capped at this value.
+Negative numbers will currently fail validation. Inputs larger than the above will return the above.
 
 ### Case sensitivity in inputs
 
-All inputs are case sensitive. For the input number (to be converted) this is because the prefix '0b', used to indicate the number is binary, cannot be distinguished from the lower case hexadecimal number '0b' (DEC:11). Since I deemed it more important to accept leading zeroes on the input than to handle lower case hexadecimal numbers, this restriction became neccesary. It will remain until a solution is found.
+All inputs are case sensitive. For the input number (to be converted) this is because the prefix '0b', used to indicate the number is binary, cannot be distinguished from the lower case hexadecimal number '0b' (DEC:11).

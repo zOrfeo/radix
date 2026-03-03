@@ -6,8 +6,6 @@
 #include "constants.h"
 #include "validation/validation.h"
 #include "conversion/conversion.h"
-#include <climits>
-#include <iostream>
 #include <unistd.h>
 
 std::pair<int, std::string> processInput(std::string& inputNum, Base inBase, Base outBase) {
@@ -30,15 +28,11 @@ std::pair<int, std::string> processInput(std::string& inputNum, Base inBase, Bas
         return {ALL_OK,inputNum};
     }
 
-    int decimalNumber;
+    std::uint32_t decimalNumber;
     if (inBase != Base::DEC){
         decimalNumber = convertFromBase(inputNum,inBase);
     } else {
-        try {
-            decimalNumber = stoi(inputNum);
-        } catch (const std::out_of_range& e) {
-            decimalNumber = INT_MAX;
-        }
+        decimalNumber = stringToUInt32(inputNum);
     }
 
     std::string outputNumber;

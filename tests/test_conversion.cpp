@@ -2,7 +2,7 @@
 #include "conversion/conversion.h"
 #include "base.h"
 #include "constants.h"
-#include <climits>
+#include <cstdint>
 
 TEST_CASE("Convert from Binary", "[convert][binary]") {
 
@@ -13,7 +13,7 @@ TEST_CASE("Convert from Binary", "[convert][binary]") {
     }
 
     SECTION("INT_MAX limited conversion") {
-        CHECK(convertFromBase("11111111111111111111111111111111", Base::BIN) == INT_MAX);
+        CHECK(convertFromBase("111111111111111111111111111111111", Base::BIN) == UINT32_MAX);
     }
 }
 
@@ -22,10 +22,11 @@ TEST_CASE("Convert from Octal", "[convert][octal]") {
     SECTION("Correct conversion") {
         CHECK(convertFromBase("10", Base::OCT) == 8);
         CHECK(convertFromBase("17", Base::OCT) == 15);
+        CHECK(convertFromBase("037777777777", Base::OCT) == UINT32_MAX);
     }
 
     SECTION("INT_MAX limited conversion") {
-        CHECK(convertFromBase("37777777777", Base::OCT) == INT_MAX);
+        CHECK(convertFromBase("40000000000", Base::OCT) == UINT32_MAX);
     }
 }
 
@@ -33,11 +34,11 @@ TEST_CASE("Convert from Decimal", "[convert][decimal]") {
 
     SECTION("Correct conversion") {
         CHECK(convertFromBase("123", Base::DEC) == 123);
-        CHECK(convertFromBase("2147483647", Base::DEC) == INT_MAX);
+        CHECK(convertFromBase("4294967295", Base::DEC) == UINT32_MAX);
     }
 
     SECTION("INT_MAX limited conversion") {
-        CHECK(convertFromBase("2147483648", Base::DEC) == INT_MAX);
+        CHECK(convertFromBase("4294967296", Base::DEC) == UINT32_MAX);
     }
 }
 
@@ -46,11 +47,11 @@ TEST_CASE("Convert from Hexadecimal", "[convert][hex]") {
     SECTION("Correct conversion") {
         CHECK(convertFromBase("A", Base::HEX) == 10);
         CHECK(convertFromBase("FF", Base::HEX) == 255);
-        CHECK(convertFromBase("7FFFFFFF", Base::HEX) == INT_MAX);
+        CHECK(convertFromBase("FFFFFFFF", Base::HEX) == UINT32_MAX);
     }
 
     SECTION("INT_MAX limited conversion") {
-        CHECK(convertFromBase("FFFFFFFF", Base::HEX) == INT_MAX);
+        CHECK(convertFromBase("100000000", Base::HEX) == UINT32_MAX);
     }
 }
 
@@ -61,7 +62,7 @@ TEST_CASE("Convert from Unknown (Decimal fallback)", "[convert][unknown]") {
     }
 
     SECTION("INT_MAX limited conversion") {
-        CHECK(convertFromBase("2147483648", Base::UNKNOWN) == INT_MAX);
+        CHECK(convertFromBase("4294967296", Base::UNKNOWN) == UINT32_MAX);
     }
 }
 
@@ -78,7 +79,7 @@ TEST_CASE("Convert to Octal", "[convert][octal]") {
 
 TEST_CASE("Convert to Decimal", "[convert][decimal]") {
     CHECK(convertToBase(123, Base::DEC) == "123");
-    CHECK(convertToBase(INT_MAX, Base::DEC) == "2147483647");
+    CHECK(convertToBase(UINT32_MAX, Base::DEC) == "4294967295");
 }
 
 TEST_CASE("Convert to Hexadecimal", "[convert][hex]") {
