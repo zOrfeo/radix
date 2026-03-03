@@ -11,6 +11,7 @@ set(SOURCES
     src/validation/validation.cpp
     src/conversion/conversion.cpp
     src/core/core.cpp
+    src/logging/logging.cpp
 )
 
 set(HEADERS
@@ -20,6 +21,7 @@ set(HEADERS
     include/validation/validation.h
     include/conversion/conversion.h
     include/core/core.h
+    include/logging/logging.h
 )
 
 # Create executable

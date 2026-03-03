@@ -9,6 +9,7 @@
 #include "core/core.h"
 #include <iostream>
 #include <unistd.h>
+#include "logging/logging.h"
 
 int main (int argc, char *argv[]) {
     int opt;
@@ -21,7 +22,7 @@ int main (int argc, char *argv[]) {
             case 'i':
                 inBase = parseBaseOption(optarg);
                 if (inBase == Base::UNKNOWN) {
-                    std::cerr << "Unknown base {" << optarg << "}" << std::endl;
+                    errMsg(INVLD_ARG_ERR, optarg);
                     return INVLD_ARG_ERR;
                 }
                 break;
@@ -29,7 +30,7 @@ int main (int argc, char *argv[]) {
             case 'o':
                 outBase = parseBaseOption(optarg);
                 if (outBase == Base::UNKNOWN) {
-                    std::cerr << "Unknown base {" << optarg << "}" << std::endl;
+                    errMsg(INVLD_ARG_ERR, optarg);
                     return INVLD_ARG_ERR;
                 }
                 break;
@@ -39,22 +40,32 @@ int main (int argc, char *argv[]) {
                 break;
 
             default:
-                std::cerr << "Unknown option {" << optarg << "}" << std::endl;
+                errMsg(INVLD_OPT_ERR, std::to_string(opt));
                 return INVLD_OPT_ERR;
         }
     }
+
     std::string inputNum;
     if (isatty(STDIN_FILENO)) {
         // If stdin is tty, then input is the last argument.
         inputNum = argv[argc-1];
         auto [rc, outputNum] = processInput(inputNum, inBase, outBase);
 
-        if (rc != ALL_OK) return rc;
+        if (rc != ALL_OK) {
+            errMsg(rc,inputNum);
+            return rc;
+        }
+
         std::cout << (applyOutputPrefix ? buildPrefix(outBase) : "") << outputNum << std::endl;
     } else {
         while (std::getline(std::cin, inputNum)) {
             auto [rc, outputNum] = processInput(inputNum, inBase, outBase);
-            if (rc != ALL_OK) return rc;
+
+            if (rc != ALL_OK) {
+                errMsg(rc,inputNum);
+                return rc;
+            }
+
             std::cout << (applyOutputPrefix ? buildPrefix(outBase) : "") << outputNum << std::endl;
         }
     }

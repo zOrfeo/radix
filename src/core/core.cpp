@@ -1,6 +1,4 @@
 #include <getopt.h>
-#include <iostream>
-#include <ostream>
 #include <unistd.h>
 #include <string>
 #include "base.h"
@@ -24,22 +22,11 @@ std::pair<int, std::string> processInput(std::string& inputNum, Base inBase, Bas
         default: break;
     }
     // Validate Input
-    switch (inBase) {
-        case Base::BIN: if (!validateBinary(inputNum)) return {INVLD_NUM_ERR,inputNum}; break;
-        case Base::OCT: if (!validateOctal(inputNum)) return {INVLD_NUM_ERR,inputNum}; break;
-        case Base::HEX: if (!validateHexadecimal(inputNum)) return {INVLD_NUM_ERR,inputNum}; break;
-        default: if (!validateDecimal(inputNum)) return {INVLD_NUM_ERR,inputNum}; break;
+    if (!validateInput(inputNum, inBase)) {
+        return {INVLD_NUM_ERR,inputNum};
     }
-
-    //if (validationRC != ALL_OK) {
-    //    const char* numberTypeStrings[] = { "BINARY", "OCTAL", "DECIMAL", "HEXADECIMAL", "UNKNOWN" };
-    //    std::cerr << "Invalid " << numberTypeStrings[static_cast<int>(inBase)] << " >> " << inputNum << std::endl;
-    //    return {validationRC,inputNum};
-    //}
-
     // Conversion & Output
     if (inBase == outBase) {
-        std::cout << inputNum << std::endl;
         return {ALL_OK,inputNum};
     }
 
