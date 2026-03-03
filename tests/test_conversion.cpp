@@ -12,7 +12,7 @@ TEST_CASE("Convert from Binary", "[convert][binary]") {
         CHECK(convertFromBase("11111111", Base::BIN) == 255);
     }
 
-    SECTION("INT_MAX limited conversion") {
+    SECTION("UINT32_MAX limited conversion") {
         CHECK(convertFromBase("111111111111111111111111111111111", Base::BIN) == UINT32_MAX);
     }
 }
@@ -25,7 +25,7 @@ TEST_CASE("Convert from Octal", "[convert][octal]") {
         CHECK(convertFromBase("037777777777", Base::OCT) == UINT32_MAX);
     }
 
-    SECTION("INT_MAX limited conversion") {
+    SECTION("UINT32_MAX limited conversion") {
         CHECK(convertFromBase("40000000000", Base::OCT) == UINT32_MAX);
     }
 }
@@ -37,7 +37,7 @@ TEST_CASE("Convert from Decimal", "[convert][decimal]") {
         CHECK(convertFromBase("4294967295", Base::DEC) == UINT32_MAX);
     }
 
-    SECTION("INT_MAX limited conversion") {
+    SECTION("UINT32_MAX limited conversion") {
         CHECK(convertFromBase("4294967296", Base::DEC) == UINT32_MAX);
     }
 }
@@ -50,7 +50,7 @@ TEST_CASE("Convert from Hexadecimal", "[convert][hex]") {
         CHECK(convertFromBase("FFFFFFFF", Base::HEX) == UINT32_MAX);
     }
 
-    SECTION("INT_MAX limited conversion") {
+    SECTION("UINT32_MAX limited conversion") {
         CHECK(convertFromBase("100000000", Base::HEX) == UINT32_MAX);
     }
 }
@@ -61,7 +61,7 @@ TEST_CASE("Convert from Unknown (Decimal fallback)", "[convert][unknown]") {
         CHECK(convertFromBase("42", Base::UNKNOWN) == 42);
     }
 
-    SECTION("INT_MAX limited conversion") {
+    SECTION("UINT32_MAX limited conversion") {
         CHECK(convertFromBase("4294967296", Base::UNKNOWN) == UINT32_MAX);
     }
 }
@@ -89,4 +89,18 @@ TEST_CASE("Convert to Hexadecimal", "[convert][hex]") {
 
 TEST_CASE("Convert to Unknown (Decimal fallback)", "[convert][unknown]") {
     CHECK(convertToBase(42, Base::UNKNOWN) == "42");
+}
+
+TEST_CASE("Convert String to UINT32", "[convert][decimal]") {
+    SECTION ("Normal Conversion") {
+        CHECK(stringToUInt32("123") == 123);
+        CHECK(stringToUInt32("000123") == 123);
+        CHECK(stringToUInt32("123000") == 123000);
+        CHECK(stringToUInt32(std::to_string(UINT32_MAX)) == UINT32_MAX);
+    }
+
+    SECTION("UINT32_MAX Limited conversion") {
+        CHECK(stringToUInt32("4294967296") == UINT32_MAX);
+        CHECK(stringToUInt32("9999999999") == UINT32_MAX);
+    }
 }
