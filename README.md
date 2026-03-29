@@ -92,4 +92,4 @@ Negative numbers will currently fail validation. Inputs larger than the above wi
 
 ### Case sensitivity in inputs
 
-All inputs are case sensitive. For the input number (to be converted) this is because the prefix '0b', used to indicate the number is binary, cannot be distinguished from the lower case hexadecimal number '0b' (DEC:11).
+All inputs are case sensitive. For the input number (to be converted) this is because the prefix '0b', used to indicate the number is binary, cannot yet be distinguished from the lower case hexadecimal number '0b' (DEC:11).
