@@ -13,8 +13,8 @@
 
 int main (int argc, char *argv[]) {
     int opt;
-    Base inBase = Base::DEC,outBase = Base::DEC;
-    bool applyOutputPrefix=false;
+    Base inBase = Base::DEC, outBase = Base::DEC;
+    bool applyOutputPrefix = false;
 
     // GetOpts
     while ((opt = getopt(argc, argv, "i:o:p")) != -1) {
@@ -42,6 +42,7 @@ int main (int argc, char *argv[]) {
             default:
                 errMsg(INVLD_OPT_ERR, std::to_string(opt));
                 return INVLD_OPT_ERR;
+                break;
         }
     }
 

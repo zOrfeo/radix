@@ -90,7 +90,6 @@ TEST_CASE("Parse Binary Prefix","[parse][prefix][binary]") {
     CHECK(detectPrefix("0b123") == BasePrefix::BIN);
     CHECK(detectPrefix("0b2342186") == BasePrefix::BIN);
     CHECK(detectPrefix("0b10110110") == BasePrefix::BIN);
-    CHECK(detectPrefix("0b") == BasePrefix::BIN);
     CHECK(detectPrefix("0bINVALIDDATA") == BasePrefix::BIN);
 }
 
@@ -98,7 +97,6 @@ TEST_CASE("Parse Octal Prefix","[parse][prefix][octal]") {
     CHECK(detectPrefix("0o123") == BasePrefix::OCT);
     CHECK(detectPrefix("0o21314765") == BasePrefix::OCT);
     CHECK(detectPrefix("0o123094983468") == BasePrefix::OCT);
-    CHECK(detectPrefix("0o") == BasePrefix::OCT);
     CHECK(detectPrefix("0oINVALIDDATA") == BasePrefix::OCT);
 }
 
@@ -106,7 +104,6 @@ TEST_CASE("Parse Hexadecimal Prefix","[parse][prefix][hex]") {
     CHECK(detectPrefix("0x123") == BasePrefix::HEX);
     CHECK(detectPrefix("0x12323484729847") == BasePrefix::HEX);
     CHECK(detectPrefix("0x123FFGHDJLKJER") == BasePrefix::HEX);
-    CHECK(detectPrefix("0x") == BasePrefix::HEX);
     CHECK(detectPrefix("0xINVALIDDATA") == BasePrefix::HEX);
 }
 
@@ -118,21 +115,25 @@ TEST_CASE("Parse No Prefix","[parse][prefix][decimal]") {
         CHECK(detectPrefix("5") == BasePrefix::NONE);
         CHECK(detectPrefix("F") == BasePrefix::NONE);
         CHECK(detectPrefix("b") == BasePrefix::NONE);
+        CHECK(detectPrefix("0b") == BasePrefix::NONE);
         CHECK(detectPrefix("o") == BasePrefix::NONE);
+        CHECK(detectPrefix("0o") == BasePrefix::NONE);
         CHECK(detectPrefix("x") == BasePrefix::NONE);
+        CHECK(detectPrefix("0x") == BasePrefix::NONE);
+        CHECK(detectPrefix("00") == BasePrefix::NONE);
+        CHECK(detectPrefix("12") == BasePrefix::NONE);
     }
 
     SECTION("Non-Zero starter") {
         CHECK(detectPrefix("123") == BasePrefix::NONE);
         CHECK(detectPrefix("1232342186") == BasePrefix::NONE);
         CHECK(detectPrefix("123") == BasePrefix::NONE);
-        CHECK(detectPrefix("1b") == BasePrefix::NONE);
-        CHECK(detectPrefix("1o") == BasePrefix::NONE);
-        CHECK(detectPrefix("1x") == BasePrefix::NONE);
+        CHECK(detectPrefix("1b1") == BasePrefix::NONE);
+        CHECK(detectPrefix("1o1") == BasePrefix::NONE);
+        CHECK(detectPrefix("1x1") == BasePrefix::NONE);
     }
 
     SECTION("Zero-Leading Raw Numbers") {
-        CHECK(detectPrefix("00") == BasePrefix::NONE);
         CHECK(detectPrefix("00INVALIDDATA") == BasePrefix::NONE);
         CHECK(detectPrefix("010101010011") == BasePrefix::NONE);
         CHECK(detectPrefix("073242346533") == BasePrefix::NONE);
@@ -143,7 +144,7 @@ TEST_CASE("Parse No Prefix","[parse][prefix][decimal]") {
 
 TEST_CASE("Parse Unknown Prefix","[parse][prefix][invalid]") {
     CHECK(detectPrefix("0d123") == BasePrefix::UNKNOWN);
-    CHECK(detectPrefix("0p") == BasePrefix::UNKNOWN);
+    CHECK(detectPrefix("0p1") == BasePrefix::UNKNOWN);
 }
 
 TEST_CASE("Base to Int Parsing", "[parse]") {

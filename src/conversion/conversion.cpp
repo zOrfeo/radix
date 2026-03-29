@@ -52,7 +52,6 @@ std::string convertToBase(std::uint32_t decimalNumber, const Base base) {
 
 std::uint32_t stringToUInt32(const std::string& string) {
     std::uint32_t num = 0;
-    std::size_t slen = string.length();
 
     for (char c : string) {
         if ( num > UINT32_DIV10 || ( num == UINT32_DIV10 && (c - CHAR_ZERO) > UINT32_LSD )) {

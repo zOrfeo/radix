@@ -35,21 +35,9 @@ std::pair<int, std::string> processInput(std::string& inputNum, Base inBase, Bas
         decimalNumber = stringToUInt32(inputNum);
     }
 
-    std::string outputNumber;
     if (outBase != Base::DEC) {
-        outputNumber = convertToBase(decimalNumber,outBase);
+        return {ALL_OK,convertToBase(decimalNumber,outBase)};
     } else {
-        outputNumber = std::to_string(decimalNumber);
-    }
-
-    return {ALL_OK,outputNumber};
-}
-
-std::string buildPrefix(Base base) {
-    switch (base) {
-        case Base::BIN: return "0b";
-        case Base::OCT: return "0o";
-        case Base::HEX: return "0x";
-        default: return "";
+        return {ALL_OK,std::to_string(decimalNumber)};
     }
 }

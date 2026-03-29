@@ -1,3 +1,6 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
 #include <cstdint>
 
 // ASCII character codes
@@ -27,3 +30,5 @@ constexpr int BASE_HEX = 16;
 // Generic Constants
 constexpr std::uint32_t UINT32_DIV10 = UINT32_MAX / 10;
 constexpr std::uint32_t UINT32_LSD = UINT32_MAX % 10;
+
+#endif

@@ -29,7 +29,7 @@ Base parseBaseOption(const std::string& typeString) {
 }
 
 BasePrefix detectPrefix(const std::string& inputNum) {
-    if (inputNum.size() < 2) return BasePrefix::NONE;
+    if (inputNum.size() <= 2) return BasePrefix::NONE;
 
     if  (inputNum[0] != CHAR_ZERO) return BasePrefix::NONE;
 
@@ -47,14 +47,5 @@ BasePrefix detectPrefix(const std::string& inputNum) {
         }
     } else {
         return BasePrefix::NONE;
-    }
-}
-
-int parseBaseToInt(const Base base) {
-    switch(base) {
-        case Base::BIN: return BASE_BIN;
-        case Base::OCT: return BASE_OCT;
-        case Base::HEX: return BASE_HEX;
-        default: return BASE_DEC;
     }
 }
