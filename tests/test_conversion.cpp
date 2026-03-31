@@ -1,7 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 #include "conversion/conversion.h"
 #include "base.h"
-#include "constants.h"
 #include <cstdint>
 
 TEST_CASE("Convert from Binary", "[convert][binary]") {

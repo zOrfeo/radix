@@ -1,32 +1,32 @@
 #include <string>
-#include "constants.h"
+#include "ascii_constants.h"
 #include "base.h"
 
 bool validateBinary(const std::string& inputNum) {
     for (char c : inputNum) {
-        if (c < CHAR_ZERO || c > CHAR_ONE) {return false;}
+        if (c < BIN_MIN || c > BIN_MAX) {return false;}
     }
     return true;
 }
 
 bool validateOctal(const std::string& inputNum) {
     for (char c : inputNum) {
-        if (c < CHAR_ZERO || c > CHAR_SEVEN) {return false;}
+        if (c < OCT_MIN || c > OCT_MAX) {return false;}
     }
     return true;
 }
 
 bool validateDecimal(const std::string& inputNum) {
     for (char c : inputNum) {
-        if (c < CHAR_ZERO || c > CHAR_NINE) {return false;}
+        if (c < DEC_MIN || c > DEC_MAX) {return false;}
     }
     return true;
 }
 
 bool validateHexadecimal(const std::string& inputNum) {
     for (char c : inputNum) {
-        if (c < CHAR_ZERO || c > CHAR_NINE) {
-            if (c < CHAR_A || c > CHAR_F ) {return false;}
+        if (c < DEC_MIN || c > DEC_MAX) {
+            if (c < HEX_MIN || c > HEX_MAX ) {return false;}
         }
     }
     return true;

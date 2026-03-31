@@ -3,7 +3,7 @@
 
 #include <string>
 #include "base.h"
-#include "constants.h"
+#include "ascii_constants.h"
 
 Base parseBaseOption(const std::string& typeString);
 BasePrefix detectPrefix(const std::string& inputNum);

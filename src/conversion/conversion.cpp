@@ -1,9 +1,12 @@
 #include <string>
 #include <algorithm>
-#include "constants.h"
+#include "ascii_constants.h"
 #include "parsing/parsing.h"
 #include "base.h"
 #include <cstdint>
+
+constexpr std::uint32_t UINT32_DIV10 = UINT32_MAX / 10;
+constexpr std::uint32_t UINT32_LSD = UINT32_MAX % 10;
 
 std::uint32_t convertFromBase(const std::string& inputNum, const Base base) {
     std::uint32_t baseVal = parseBaseToInt(base);
@@ -11,10 +14,10 @@ std::uint32_t convertFromBase(const std::string& inputNum, const Base base) {
     std::uint32_t decimalNumber = 0;
     std::uint32_t digit;
     for (char c : inputNum) {
-        if (c >= CHAR_ZERO && c <= CHAR_NINE) {
-            digit = c - CHAR_ZERO;
+        if (c >= DEC_MIN && c <= DEC_MAX) {
+            digit = c - NUM_OFFSET;
         } else {
-            digit = c - CHAR_A + 10;
+            digit = c - HEX_OFFSET;
         }
 
         if (decimalNumber > (UINT32_MAX - digit) / baseVal ) return UINT32_MAX;
@@ -38,9 +41,9 @@ std::string convertToBase(std::uint32_t decimalNumber, const Base base) {
         int remainder = decimalNumber % baseVal;
 
         if (remainder <= 9) {
-            nonDecimalNumber += static_cast<char>(remainder + CHAR_ZERO);
+            nonDecimalNumber += static_cast<char>(remainder + NUM_OFFSET);
         } else {
-            nonDecimalNumber += static_cast<char>(remainder - 10 + CHAR_A);
+            nonDecimalNumber += static_cast<char>(remainder + HEX_OFFSET);
         }
 
         decimalNumber /= baseVal;
@@ -54,12 +57,12 @@ std::uint32_t stringToUInt32(const std::string& string) {
     std::uint32_t num = 0;
 
     for (char c : string) {
-        if ( num > UINT32_DIV10 || ( num == UINT32_DIV10 && (c - CHAR_ZERO) > UINT32_LSD )) {
+        if ( num > UINT32_DIV10 || ( num == UINT32_DIV10 && (c - NUM_OFFSET) > UINT32_LSD )) {
             return UINT32_MAX;
         }
 
         num = ( num * 10 );
-        num += (c - CHAR_ZERO);
+        num += (c - NUM_OFFSET);
     }
     return num;
 }

@@ -1,7 +1,7 @@
 #include "base.h"
 #include <string>
 #include <unordered_map>
-#include "constants.h"
+#include "ascii_constants.h"
 
 Base parseBaseOption(const std::string& typeString) {
 
@@ -29,18 +29,26 @@ Base parseBaseOption(const std::string& typeString) {
 }
 
 BasePrefix detectPrefix(const std::string& inputNum) {
+    /*
+     * Prefix detection follows the following logic:
+     * - All prefixes are 2 characters long.
+     * - All prefixes start with a 0.
+     * - Numbers cannot only be a prefix.
+     * - Prefixes are optional.
+     * - If provided, prefixes should be valid.
+     */
     if (inputNum.size() <= 2) return BasePrefix::NONE;
 
     if  (inputNum[0] != CHAR_ZERO) return BasePrefix::NONE;
 
     switch(inputNum[1]) {
-        case CHAR_b: return BasePrefix::BIN;
-        case CHAR_o: return BasePrefix::OCT;
-        case CHAR_x: return BasePrefix::HEX;
+        case CHAR_B_LOWER: return BasePrefix::BIN;
+        case CHAR_O_LOWER: return BasePrefix::OCT;
+        case CHAR_X_LOWER: return BasePrefix::HEX;
     }
 
-    if (inputNum[1] < CHAR_ZERO || inputNum[1] > CHAR_NINE) {
-        if (inputNum[1] < CHAR_A || inputNum[1] > CHAR_F) {
+    if (inputNum[1] < DEC_MIN || inputNum[1] > DEC_MAX) {
+        if (inputNum[1] < HEX_MIN || inputNum[1] > HEX_MAX) {
             return BasePrefix::UNKNOWN;
         } else {
             return BasePrefix::NONE;

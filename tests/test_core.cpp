@@ -1,7 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include "core/core.h"
 #include "base.h"
-#include "constants.h"
+#include "return_codes.h"
 
 TEST_CASE("Build Prefix", "[core][prefix]") {
     CHECK(buildPrefix(Base::BIN) == "0b");

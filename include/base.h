@@ -18,4 +18,9 @@ enum class BasePrefix {
     NONE
 };
 
+constexpr int BASE_BIN = 2;
+constexpr int BASE_OCT = 8;
+constexpr int BASE_DEC = 10;
+constexpr int BASE_HEX = 16;
+
 #endif
