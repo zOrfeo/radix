@@ -1,4 +1,4 @@
-# Radix v1.0
+# Radix
 
 Radix is a CLI tool to convert numbers between binary, octal, decimal and hexadecimal bases.
 
