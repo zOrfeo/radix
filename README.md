@@ -65,14 +65,17 @@ Radix outputs a series of exit codes depending on the output of the operation. T
 
 ## Installation
 
-1. Clone this repository and build from source:
+### Arch Linux
+[Install via AUR](https://aur.archlinux.org/packages/radix/)
+
+Or clone and build:
 ```bash
-git clone <repo-url>
+git clone https://aur.archlinux.org/radix.git
 cd radix
-cmake -S . -B build
-cmake --build build
-sudo cmake --install build   # optional
+makepkg -si
 ```
+### Debian / Ubuntu
+[Download the latest .deb package](https://github.com/zOrfeo/radix/releases/latest)
 
 ### Requirements / Dependencies
 
