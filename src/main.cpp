@@ -10,14 +10,15 @@
 #include <iostream>
 #include <unistd.h>
 #include "logging/logging.h"
+#include "sign.h"
 
 int main (int argc, char *argv[]) {
     int opt;
     Base inBase = Base::DEC, outBase = Base::DEC;
-    bool applyOutputPrefix = false;
+    bool applyOutputPrefix = false, applyOutputSign = false;
 
     // GetOpts
-    while ((opt = getopt(argc, argv, "i:o:p")) != -1) {
+    while ((opt = getopt(argc, argv, "i:o:ps")) != -1) {
         switch(opt) {
             case 'i':
                 inBase = parseBaseOption(optarg);
@@ -39,6 +40,10 @@ int main (int argc, char *argv[]) {
                 applyOutputPrefix = true;
                 break;
 
+            case 's':
+                applyOutputSign = true;
+                break;
+
             default:
                 errMsg(INVLD_OPT_ERR, std::to_string(opt));
                 return INVLD_OPT_ERR;
@@ -50,6 +55,9 @@ int main (int argc, char *argv[]) {
     if (isatty(STDIN_FILENO)) {
         // If stdin is tty, then input is the last argument.
         inputNum = argv[argc-1];
+        Sign sign = detectSign(inputNum);
+        if (sign != Sign::NONE) inputNum.erase(0,1);
+
         auto [rc, outputNum] = processInput(inputNum, inBase, outBase);
 
         if (rc != ALL_OK) {
@@ -57,9 +65,14 @@ int main (int argc, char *argv[]) {
             return rc;
         }
 
-        std::cout << (applyOutputPrefix ? buildPrefix(outBase) : "") << outputNum << std::endl;
+        std::cout << (sign == Sign::NEGATIVE ? "-" : (applyOutputSign ? "+" : ""));
+        std::cout << (applyOutputPrefix ? buildPrefix(outBase) : "");
+        std::cout << outputNum << std::endl;
     } else {
         while (std::getline(std::cin, inputNum)) {
+            Sign sign = detectSign(inputNum);
+            if (sign != Sign::NONE) inputNum.erase(0,1);
+
             auto [rc, outputNum] = processInput(inputNum, inBase, outBase);
 
             if (rc != ALL_OK) {
@@ -67,7 +80,9 @@ int main (int argc, char *argv[]) {
                 return rc;
             }
 
-            std::cout << (applyOutputPrefix ? buildPrefix(outBase) : "") << outputNum << std::endl;
+            std::cout << (sign == Sign::NEGATIVE ? "-" : (applyOutputSign ? "+" : ""));
+            std::cout << (applyOutputPrefix ? buildPrefix(outBase) : "");
+            std::cout << outputNum << std::endl;
         }
     }
     return ALL_OK;

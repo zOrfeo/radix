@@ -23,10 +23,11 @@ Option -p will prepended the output with an appropriate prefix (see below in Bas
 radix -o hex -p 273
 # Converts Decimal 273 to Hexadecimal 111. Outputs '0x111'.
 ```
+Option -s will force the output to be signed. Note that negative numbers are always signed regardless of this option, but positive numbers will not be signed by default (as unsigned numbers are assumed to be positive).
 
 Options can be set in any order (but the option argument must immediately follow its option).
 
-NB: The current version of Radix only supports hexadecimal digits A-F in upper case.
+NB: The current version of Radix only supports A-F in upper case for hexadecimal numbers.
 
 ### Valid Option Arguments
 
@@ -88,7 +89,7 @@ Octal   -> 037777777777
 Decimal -> 4294967295  
 Hex     -> FFFFFFFF  
 
-Negative numbers will currently fail validation. Inputs larger than the above will return the above.
+Negative numbers are supported, as the sign will be stripped before conversion and re-applied afterwards. Inputs larger than the above values will return the above values (UINT32_MAX in whatever base).
 
 ### Case sensitivity in inputs
 

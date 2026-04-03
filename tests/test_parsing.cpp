@@ -1,6 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include "parsing/parsing.h"
 #include "base.h"
+#include "sign.h"
 
 TEST_CASE("Parse Binary Base Options", "[parse][option][binary]") {
     CHECK(parseBaseOption("b") == Base::BIN);
@@ -145,6 +146,12 @@ TEST_CASE("Parse No Prefix","[parse][prefix][decimal]") {
 TEST_CASE("Parse Unknown Prefix","[parse][prefix][invalid]") {
     CHECK(detectPrefix("0d123") == BasePrefix::UNKNOWN);
     CHECK(detectPrefix("0p1") == BasePrefix::UNKNOWN);
+}
+
+TEST_CASE("Sign detection","[parse][sign]") {
+    CHECK(detectSign("-111") == Sign::NEGATIVE);
+    CHECK(detectSign("+222") == Sign::POSITIVE);
+    CHECK(detectSign("333") == Sign::NONE);
 }
 
 /*TEST_CASE("Base to Int Parsing", "[parse]") {

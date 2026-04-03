@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 #include "ascii_constants.h"
+#include "sign.h"
 
 Base parseBaseOption(const std::string& typeString) {
 
@@ -26,6 +27,16 @@ Base parseBaseOption(const std::string& typeString) {
     if (auto base = baseLookup.find(typeString); base != baseLookup.end()) return base->second;
 
     return Base::UNKNOWN;
+}
+
+Sign detectSign(const std::string& inputNum) {
+    if (inputNum[0] == '-') {
+        return Sign::NEGATIVE;;
+    } else if(inputNum[0] == '+') {
+        return Sign::POSITIVE;
+    } else {
+        return Sign::NONE;
+    }
 }
 
 BasePrefix detectPrefix(const std::string& inputNum) {

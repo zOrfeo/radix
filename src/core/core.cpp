@@ -13,9 +13,9 @@ std::pair<int, std::string> processInput(std::string& inputNum, Base inBase, Bas
     BasePrefix prefix = detectPrefix(inputNum);
     // Prefix overrides input flag
     switch (prefix) {
-        case BasePrefix::BIN: inBase = Base::BIN; inputNum = inputNum.substr(2); break;
-        case BasePrefix::OCT: inBase = Base::OCT; inputNum = inputNum.substr(2); break;
-        case BasePrefix::HEX: inBase = Base::HEX; inputNum = inputNum.substr(2); break;
+        case BasePrefix::BIN: inBase = Base::BIN; inputNum.erase(0,2); break;
+        case BasePrefix::OCT: inBase = Base::OCT; inputNum.erase(0,2); break;
+        case BasePrefix::HEX: inBase = Base::HEX; inputNum.erase(0,2); break;
         case BasePrefix::UNKNOWN: return {INVLD_PFX_ERR,inputNum};
         default: break;
     }
