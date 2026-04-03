@@ -16,8 +16,10 @@ std::uint32_t convertFromBase(const std::string& inputNum, const Base base) {
     for (char c : inputNum) {
         if (c >= DEC_MIN && c <= DEC_MAX) {
             digit = c - NUM_OFFSET;
+        } else if (c >= HEX_MIN_UPPER && c <= HEX_MAX_UPPER) {
+            digit = c - HEX_OFFSET_UPPER;
         } else {
-            digit = c - HEX_OFFSET;
+            digit = c - HEX_OFFSET_LOWER;
         }
 
         if (decimalNumber >= (UINT32_MAX - digit) / baseVal ) return UINT32_MAX;
@@ -43,7 +45,7 @@ std::string convertToBase(std::uint32_t decimalNumber, const Base base) {
         if (remainder <= 9) {
             nonDecimalNumber += static_cast<char>(remainder + NUM_OFFSET);
         } else {
-            nonDecimalNumber += static_cast<char>(remainder + HEX_OFFSET);
+            nonDecimalNumber += static_cast<char>(remainder + HEX_OFFSET_UPPER);
         }
 
         decimalNumber /= baseVal;

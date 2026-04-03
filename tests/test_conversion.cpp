@@ -47,6 +47,9 @@ TEST_CASE("Convert from Hexadecimal", "[convert][hex]") {
         CHECK(convertFromBase("A", Base::HEX) == 10);
         CHECK(convertFromBase("FF", Base::HEX) == 255);
         CHECK(convertFromBase("FFFFFFFF", Base::HEX) == UINT32_MAX);
+        CHECK(convertFromBase("a", Base::HEX) == 10);
+        CHECK(convertFromBase("ff", Base::HEX) == 255);
+        CHECK(convertFromBase("ffffffff", Base::HEX) == UINT32_MAX);
     }
 
     SECTION("UINT32_MAX limited conversion") {

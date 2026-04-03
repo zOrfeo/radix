@@ -59,7 +59,7 @@ BasePrefix detectPrefix(const std::string& inputNum) {
     }
 
     if (inputNum[1] < DEC_MIN || inputNum[1] > DEC_MAX) {
-        if (inputNum[1] < HEX_MIN || inputNum[1] > HEX_MAX) {
+        if (inputNum[1] < HEX_MIN_UPPER || inputNum[1] > HEX_MAX_UPPER) {
             return BasePrefix::UNKNOWN;
         } else {
             return BasePrefix::NONE;

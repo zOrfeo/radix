@@ -26,7 +26,9 @@ bool validateDecimal(const std::string& inputNum) {
 bool validateHexadecimal(const std::string& inputNum) {
     for (char c : inputNum) {
         if (c < DEC_MIN || c > DEC_MAX) {
-            if (c < HEX_MIN || c > HEX_MAX ) {return false;}
+            if (c < HEX_MIN_UPPER || c > HEX_MAX_UPPER ) {
+                if (c < HEX_MIN_LOWER || c > HEX_MAX_LOWER ) {return false;}
+            }
         }
     }
     return true;

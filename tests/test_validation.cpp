@@ -77,7 +77,11 @@ TEST_CASE("Validate Hexadecimal Numbers", "[validation][hex]") {
         CHECK(validateHexadecimal("9") == true);
         CHECK(validateHexadecimal("A") == true);
         CHECK(validateHexadecimal("F") == true);
+        CHECK(validateHexadecimal("a") == true);
+        CHECK(validateHexadecimal("f") == true);
         CHECK(validateHexadecimal("1A3F") == true);
+        CHECK(validateHexadecimal("1a3f") == true);
+        CHECK(validateHexadecimal("0Bff") == true);
 
         // 32-character valid hexadecimal string
         CHECK(validateHexadecimal("ABCDEF0123456789ABCDEF0123456789") == true);

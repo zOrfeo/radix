@@ -94,6 +94,6 @@ Negative numbers are supported. The sign is stripped before conversion and re-ap
 ## Executing via TTY
 If passing a negative input number from tty, you need to pass it after the '--'  separator otherwise the negative input number will be treated as an option, and return an error. There is no such requirement if passing the input number via pipe or file redirect.
 
-### Case sensitivity in inputs
+## Contrivences and Quirks
 
-All inputs are case sensitive. For the input number (to be converted) this is because the prefix '0b', used to indicate the number is binary, cannot yet be distinguished from the lower case hexadecimal number '0b' (DEC:11).
+The binary prefix '0b' is a valid hexadecimal number. Any binary number is also a valid hexadecimal number. This makes impossible to detect if a number such as 0b01 etc. is a hexidecimal number (equivalent to DEC:2817) or a binary number with a prefix (equivalent to DEC:1). In the current version, if the input starts with 0b, it will be interpreted as the prefix of a binary number and the rest of the input will be treated as such. So an input of 0bff will return a validation error (as it will try to validate 'ff' as a binary number). Any hexadecimal number starting '0b' should be prefixed with '0x' (the hexadecimal prefix) i.e. '0x0bff' instead of '0bff', to ensure proper function.
