@@ -16,6 +16,7 @@ set(SOURCES
 
 set(HEADERS
     include/ascii_constants.h
+    include/sign.h
     include/return_codes.h
     include/base.h
     include/parsing/parsing.h
