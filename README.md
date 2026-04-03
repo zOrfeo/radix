@@ -4,7 +4,7 @@ Radix is a CLI tool to convert numbers between binary, octal, decimal and hexade
 
 ## Usage
 
-Radix can convert numbers passed as command line arguments (in which case they must appear as the last argument!) or via stdin. If stdin is a redirected file, Radix will process each line as a separate number to be converted. If input is provided via stdin, Radix will ignore any non-flag command line input.
+Radix can convert numbers passed as command line arguments (in which case they must appear as the last argument!) or via stdin (pipe or file redirect). If stdin is a redirected file, Radix will process each line as a separate number to be converted. If input is provided via stdin, Radix will ignore any non-flag command line input.
 
 Radix accepts 3 optional flags:
 
@@ -81,7 +81,7 @@ Radix requires the following in order to compile & run:
 - C++23 compatible compiler
 - CMake 3.16+
 
-## Limits
+## Limitations
 Radix currently supports up to (unsigned) 32bit integers. This means the maximum value that can be fed in is:  
   
 Binary  -> 11111111111111111111111111111111  
@@ -89,7 +89,10 @@ Octal   -> 037777777777
 Decimal -> 4294967295  
 Hex     -> FFFFFFFF  
 
-Negative numbers are supported, as the sign will be stripped before conversion and re-applied afterwards. Inputs larger than the above values will return the above values (UINT32_MAX in whatever base).
+Negative numbers are supported. The sign is stripped before conversion and re-applied afterwards, meaning all 32 bits are available for storing the number. Inputs larger than the above values will return the above values (UINT32_MAX in whatever base).
+
+## Executing via TTY
+If passing a negative input number from tty, you need to pass it after the '--'  separator otherwise the negative input number will be treated as an option, and return an error. There is no such requirement if passing the input number via pipe or file redirect.
 
 ### Case sensitivity in inputs
 
