@@ -1,4 +1,4 @@
-# Radix v0.1.0
+# Radix v1.0
 
 Radix is a CLI tool to convert numbers between binary, octal, decimal and hexadecimal bases.
 
@@ -94,6 +94,6 @@ Negative numbers are supported. The sign is stripped before conversion and re-ap
 ## Executing via TTY
 If passing a negative input number from tty, you need to pass it after the '--'  separator otherwise the negative input number will be treated as an option, and return an error. There is no such requirement if passing the input number via pipe or file redirect.
 
-## Contrivences and Quirks
+## Contrivances and Quirks
 
 The binary prefix '0b' is a valid hexadecimal number. Any binary number is also a valid hexadecimal number. This makes impossible to detect if a number such as 0b01 etc. is a hexidecimal number (equivalent to DEC:2817) or a binary number with a prefix (equivalent to DEC:1). In the current version, if the input starts with 0b, it will be interpreted as the prefix of a binary number and the rest of the input will be treated as such. So an input of 0bff will return a validation error (as it will try to validate 'ff' as a binary number). Any hexadecimal number starting '0b' should be prefixed with '0x' (the hexadecimal prefix) i.e. '0x0bff' instead of '0bff', to ensure proper function.
