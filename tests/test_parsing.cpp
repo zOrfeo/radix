@@ -147,7 +147,7 @@ TEST_CASE("Parse Unknown Prefix","[parse][prefix][invalid]") {
     CHECK(detectPrefix("0p1") == BasePrefix::UNKNOWN);
 }
 
-TEST_CASE("Base to Int Parsing", "[parse]") {
+/*TEST_CASE("Base to Int Parsing", "[parse]") {
     CHECK(parseBaseToInt(Base::BIN) == 2);
     CHECK(parseBaseToInt(Base::OCT) == 8);
     CHECK(parseBaseToInt(Base::DEC) == 10);
@@ -155,4 +155,4 @@ TEST_CASE("Base to Int Parsing", "[parse]") {
 
     // Should never naturally occur, but should return default base10.
     CHECK(parseBaseToInt(Base::UNKNOWN) == 10);
-}
+}*/

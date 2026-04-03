@@ -1,11 +1,13 @@
 #ifndef FORMAT_H
 #define FORMAT_H
 
+#include <cstdint>
+
 enum class Base {
-    BIN,
-    OCT,
-    DEC,
-    HEX,
+    BIN = 2,
+    OCT = 8,
+    DEC = 10,
+    HEX = 16,
     UNKNOWN
 };
 
@@ -17,10 +19,5 @@ enum class BasePrefix {
     UNKNOWN,
     NONE
 };
-
-constexpr int BASE_BIN = 2;
-constexpr int BASE_OCT = 8;
-constexpr int BASE_DEC = 10;
-constexpr int BASE_HEX = 16;
 
 #endif

@@ -28,9 +28,7 @@ constexpr char HEX_OFFSET = 'A' - 10;
  */
 constexpr char CHAR_ZERO    = '0';
 constexpr char CHAR_B_LOWER = 'b';
-constexpr char CHAR_I_LOWER = 'i';
 constexpr char CHAR_O_LOWER = 'o';
-constexpr char CHAR_P_LOWER = 'p';
 constexpr char CHAR_X_LOWER = 'x';
 
 #endif

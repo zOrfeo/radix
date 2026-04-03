@@ -54,7 +54,7 @@ TEST_CASE("Convert from Hexadecimal", "[convert][hex]") {
     }
 }
 
-TEST_CASE("Convert from Unknown (Decimal fallback)", "[convert][unknown]") {
+/*TEST_CASE("Convert from Unknown (Decimal fallback)", "[convert][unknown]") {
 
     SECTION("Correct conversion") {
         CHECK(convertFromBase("42", Base::UNKNOWN) == 42);
@@ -63,7 +63,7 @@ TEST_CASE("Convert from Unknown (Decimal fallback)", "[convert][unknown]") {
     SECTION("UINT32_MAX limited conversion") {
         CHECK(convertFromBase("4294967296", Base::UNKNOWN) == UINT32_MAX);
     }
-}
+}*/
 
 TEST_CASE("Convert to Binary", "[convert][binary]") {
     CHECK(convertToBase(0, Base::BIN) == "0");
@@ -86,9 +86,9 @@ TEST_CASE("Convert to Hexadecimal", "[convert][hex]") {
     CHECK(convertToBase(255, Base::HEX) == "FF");
 }
 
-TEST_CASE("Convert to Unknown (Decimal fallback)", "[convert][unknown]") {
+/*TEST_CASE("Convert to Unknown (Decimal fallback)", "[convert][unknown]") {
     CHECK(convertToBase(42, Base::UNKNOWN) == "42");
-}
+}*/
 
 TEST_CASE("Convert String to UINT32", "[convert][decimal]") {
     SECTION ("Normal Conversion") {

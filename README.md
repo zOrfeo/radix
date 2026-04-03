@@ -77,7 +77,7 @@ sudo cmake --install build   # optional
 
 Radix requires the following in order to compile & run:
 
-- C++17 compatible compiler
+- C++23 compatible compiler
 - CMake 3.16+
 
 ## Limits
