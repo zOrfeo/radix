@@ -68,12 +68,6 @@ Radix outputs a series of exit codes depending on the output of the operation. T
 ### Arch Linux
 [Install via AUR](https://aur.archlinux.org/packages/radix/)
 
-Or clone and build:
-```bash
-git clone https://aur.archlinux.org/radix.git
-cd radix
-makepkg -si
-```
 ### Debian / Ubuntu
 [Download the latest .deb package](https://github.com/zOrfeo/radix/releases/latest)
 
