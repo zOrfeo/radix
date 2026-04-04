@@ -1,96 +1,115 @@
 # Radix
 
-Radix is a CLI tool to convert numbers between binary, octal, decimal and hexadecimal bases.
+**Radix** is a lightweight CLI tool for converting numbers between binary, octal, decimal, and hexadecimal bases.
 
-## Usage
+It is designed to be simple, predictable, and easy to integrate into shell workflows.
 
-Radix can convert numbers passed as command line arguments (in which case they must appear as the last argument!) or via stdin (pipe or file redirect). If stdin is a redirected file, Radix will process each line as a separate number to be converted. If input is provided via stdin, Radix will ignore any non-flag command line input.
+---
 
-Radix accepts 3 optional flags:
+## Documentation
+
+- [Manual](docs/MANUAL.md)
+
+--
+
+## Features
+
+- Convert between common bases: binary, octal, decimal, hexadecimal
+- Accepts input via arguments, pipes, or file redirection
+- Base autodetection using standard prefixes (`0b`, `0o`, `0x`)
+- Optional prefix formatting for output
+- Supports signed and unsigned values
+- Consistent exit codes for scripting
+
+---
+
+## Quick Start
 
 ```bash
 radix -i bin -o dec 1010
-# Converts Binary 1010 to Decimal 10. Outputs '10'.
+# → 10
+
 radix -o hex 273
-# Converts Decimal 273 to Hexadecimal 111. Outputs '111'.
-radix -i hex -o bin FF
-# Converts Hexadecimal FF to Binary 11111111. Outputs '11111111'.
+# → 111
+
+echo 42 | radix -o bin
+# → 101010
 ```
-Options -i and -o set the input and output base respectively. If either flag is not provided, that option defaults to DECIMAL.
 
-Option -p will prepended the output with an appropriate prefix (see below in Base Autodetection), e.g.
-```bash
-radix -o hex -p 273
-# Converts Decimal 273 to Hexadecimal 111. Outputs '0x111'.
-```
-Option -s will force the output to be signed. Note that negative numbers are always signed regardless of this option, but positive numbers will not be signed by default (as unsigned numbers are assumed to be positive).
-
-Options can be set in any order (but the option argument must immediately follow its option).
-
-NB: The current version of Radix only supports A-F in upper case for hexadecimal numbers.
-
-### Valid Option Arguments
-
-For binary, the accepted values are `bin, b, 2`
-
-For octal, the accepted values are `oct, o, 8`
-
-For decimal, the accepted values are `dec, d, 10`
-
-For hexadecimal, the accepted values are `hex, h, 16`
-
-All other values will result in validation failure.
-
-### Base Autodetection
-
-Non-Decimal numbers can be represented using a prefix:
-
-- Binary -> 0b
-- Octal  -> 0o
-- Hex    -> 0x
-
-(There is no prefix for decimal numbers as this is the assumed default base)
-
-Radix will detect the presence of these prefixes, and use them to determine the input base. If a prefix is present, Radix will ignore the -i option for that input number and interpret it using the prefix.
-
-## Exit Codes
-
-Radix outputs a series of exit codes depending on the output of the operation. These are as follows:
-
-0 - All Ok (Success).  
-1 - Invalid option.  
-2 - Provided option argument is invalid.  
-3 - Input number has an invalid prefix.  
-4 - Input number is invalid.  
+---
 
 ## Installation
 
 ### Arch Linux
 [Install via AUR](https://aur.archlinux.org/packages/radix/)
 
+via yay:
+```bash
+yay -S radix
+```
+
 ### Debian / Ubuntu
-[Download the latest .deb package](https://github.com/zOrfeo/radix/releases/latest)
+Download the latest `.deb` from the [releases page.](https://github.com/zOrfeo/radix/releases/latest)
 
-### Requirements / Dependencies
+---
 
-Radix requires the following in order to compile & run:
+## Usage
 
+Radix accepts input either:
+- as a positional argument, or
+- via standard input (stdin)
+
+Examples:
+```bash
+radix -o bin 42
+radix -i hex -o dec FF
+radix -o hex < numbers.txt
+```
+
+For full usage details, options, and edge cases, see the manual:
+
+```bash
+man radix
+```
+
+---
+
+## Notes
+
+- Decimal is the default input and output base
+- Prefixes (`0b`, `0o`, `0x`) override the specified input base
+- Hexadecimal input currently requires uppercase letters (`A–F`)
+- When passing negative numbers via CLI, use `--`:
+  ```bash
+  radix -o bin -- -42
+  ```
+
+---
+
+## Limitations
+
+- Supports up to 32-bit unsigned integers
+- Larger values are clamped to the maximum (`UINT32_MAX`)
+
+---
+
+## Building from Source
+
+### Requirements
 - C++23 compatible compiler
 - CMake 3.16+
 
-## Limitations
-Radix currently supports up to (unsigned) 32bit integers. This means the maximum value that can be fed in is:  
-  
-Binary  -> 11111111111111111111111111111111  
-Octal   -> 037777777777  
-Decimal -> 4294967295  
-Hex     -> FFFFFFFF  
+### Build
+```bash
+git clone https://github.com/zOrfeo/radix.git
+cd radix
+cmake -B build
+cmake --build build
+```
 
-Negative numbers are supported. The sign is stripped before conversion and re-applied afterwards, meaning all 32 bits are available for storing the number. Inputs larger than the above values will return the above values (UINT32_MAX in whatever base).
+---
 
-## Executing via TTY
-If passing a negative input number from tty, you need to pass it after the '--'  separator otherwise the negative input number will be treated as an option, and return an error. There is no such requirement if passing the input number via pipe or file redirect.
+## Contributing
+Please report any bugs using the Github Issue Tracker along with any suggestions for new features or capabilities.
 
-## Contrivances and Quirks
-
-The binary prefix '0b' is a valid hexadecimal number. Any binary number is also a valid hexadecimal number. This makes impossible to detect if a number such as 0b01 etc. is a hexidecimal number (equivalent to DEC:2817) or a binary number with a prefix (equivalent to DEC:1). In the current version, if the input starts with 0b, it will be interpreted as the prefix of a binary number and the rest of the input will be treated as such. So an input of 0bff will return a validation error (as it will try to validate 'ff' as a binary number). Any hexadecimal number starting '0b' should be prefixed with '0x' (the hexadecimal prefix) i.e. '0x0bff' instead of '0bff', to ensure proper function.
+I am happy to accept pull requests if you want to fix/apply them yourself.
