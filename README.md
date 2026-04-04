@@ -6,12 +6,6 @@ It is designed to be simple, predictable, and easy to integrate into shell workf
 
 ---
 
-## Documentation
-
-- [Manual](docs/MANUAL.md)
-
---
-
 ## Features
 
 - Convert between common bases: binary, octal, decimal, hexadecimal
@@ -20,6 +14,10 @@ It is designed to be simple, predictable, and easy to integrate into shell workf
 - Optional prefix formatting for output
 - Supports signed and unsigned values
 - Consistent exit codes for scripting
+
+## Documentation
+
+- [Manual](docs/MANUAL.md)
 
 ---
 
