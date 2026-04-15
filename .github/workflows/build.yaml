@@ -1,0 +1,51 @@
+name: Build and Unit Test
+
+on:
+  push:
+    branches: [main, dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX=/usr
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Upload unit tests
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-tests
+          path: build/unit_tests
+
+  unit-test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fetch unit_test binary
+        uses: actions/download-artifact@v4
+        with:
+          name: unit-tests
+
+      - name: Ensure executable
+        run: chmod +x unit_tests
+
+      - name: Run unit tests
+        run: |
+          output=$(./unit_tests)
+          echo $output
+
+          if ! echo "$output" | grep -q "^All tests passed"; then
+            echo "Test failure(s)"
+            exit 1
+          fi

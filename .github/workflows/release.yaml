@@ -1,0 +1,77 @@
+name: Build and Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX=/usr
+
+      - name: Build
+        run: cmake --build build --parallel -DBUILD_TESTING=OFF
+
+      - name: Upload Binary Artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: radix-bin
+          path: build/radix
+
+  package:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch binary
+        uses: actions/download-artifact@v4
+        with:
+          name: radix-bin
+
+      - name: Ensure executable
+        run: chmod +x radix
+
+      - name: Package .deb (release only)
+        run: |
+          VERSION="${{ github.event.release.tag_name }}"
+          VERSION="${VERSION#v}"
+          PKG="radix_${VERSION}_amd64"
+
+          # Create directory structure
+          mkdir -p "${PKG}/DEBIAN"
+          mkdir -p "${PKG}/usr/bin"
+          mkdir -p "${PKG}/usr/share/man/man1"
+
+          cp radix "${PKG}/usr/bin/"
+
+          cp docs/radix.1 "${PKG}/usr/share/man/man1/" || true
+          gzip -9 "${PKG}/usr/share/man/man1/radix.1" || true
+
+          # Control file
+          cat > "${PKG}/DEBIAN/control" << EOF
+          Package: radix
+          Version: ${VERSION}
+          Architecture: amd64
+          Maintainer: zOrfeo
+          Description: CLI tool to convert numbers between Binary, Octal, Decimal and Hexadecimal
+          EOF
+
+          dpkg-deb --build "${PKG}"
+
+      - name: Upload .deb to release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "radix_*.deb"

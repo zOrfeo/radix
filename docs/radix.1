@@ -1,0 +1,130 @@
+.TH RADIX 1
+.SH NAME
+radix \[em] convert numbers between binary, octal, decimal, and hexadecimal
+.SH SYNOPSIS
+.B radix
+[\fIOPTIONS\fR] [\fINUMBER\fR]
+.SH DESCRIPTION
+radix converts integers between common numeral systems: binary, octal,
+decimal, and hexadecimal.
+.PP
+Input may be provided as a command-line argument or via standard input
+(stdin). When reading from stdin, positional arguments are ignored.
+.PP
+When input is redirected from a file, each line is processed as a
+separate value.
+.SH OPTIONS
+.TP
+.B \-i BASE
+Specify the input base.
+.TP
+.B \-o BASE
+Specify the output base.
+.IP
+The default base is decimal for both input and output.
+.TP
+.B \-p
+Prepend the output with a base prefix:
+.RS
+.TP
+binary:      0b
+.TP
+octal:       0o
+.TP
+hexadecimal: 0x
+.RE
+.TP
+.B \-s
+Force signed output. Positive values are unsigned by default.
+Negative values are always signed.
+.SH BASES
+The following values are accepted for BASE:
+.RS
+.TP
+binary:      bin, b, 2
+.TP
+octal:       oct, o, 8
+.TP
+decimal:     dec, d, 10
+.TP
+hexadecimal: hex, h, 16
+.RE
+.PP
+Invalid values result in an error.
+.SH BASE AUTODETECTION
+radix supports base autodetection using prefixes:
+.RS
+.TP
+.B 0b
+binary
+.TP
+.B 0o
+octal
+.TP
+.B 0x
+hexadecimal
+.RE
+.PP
+If a prefix is present, it overrides the \fB\-i\fR option.
+Decimal input has no prefix and is assumed by default.
+.SH INPUT
+A NUMBER may be provided as a positional argument or via stdin.
+.PP
+Examples:
+.RS
+.nf
+radix \-i bin \-o dec 1010
+radix \-o hex 273
+echo 42 | radix \-o bin
+radix \-o hex < file.txt
+.fi
+.RE
+.SH EXIT STATUS
+.TP
+.B 0
+Success
+.TP
+.B 1
+Invalid option
+.TP
+.B 2
+Invalid option argument
+.TP
+.B 3
+Invalid prefix
+.TP
+.B 4
+Invalid input
+.SH LIMITATIONS
+radix supports up to 32-bit unsigned integers.
+.PP
+Maximum values:
+.RS
+.TP
+binary:      11111111111111111111111111111111
+.TP
+octal:       037777777777
+.TP
+decimal:     4294967295
+.TP
+hexadecimal: FFFFFFFF
+.RE
+.PP
+Values exceeding these limits are clamped to the maximum value.
+.PP
+Negative values are supported. The sign is removed before conversion
+and reapplied to the result.
+.SH NOTES
+When passing a negative value as a command-line argument, use \(oq\-\-\(cq to
+terminate option parsing:
+.RS
+.nf
+radix \-o bin \-\- \-42
+.fi
+.RE
+.PP
+This is not required when using stdin.
+.SH BUGS
+Values beginning with \(oq0b\(cq are always interpreted as binary. This may
+conflict with valid hexadecimal representations. Prefix hexadecimal
+values explicitly with \(oq0x\(cq to avoid ambiguity.
