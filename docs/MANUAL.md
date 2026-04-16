@@ -73,14 +73,14 @@
     4    Invalid input
 
 ## LIMITATIONS
-    radix supports up to 32-bit unsigned integers.
+    radix supports up to 64-bit (unsigned) integers.
 
     Maximum values:
 
-        binary:      11111111111111111111111111111111
-        octal:       037777777777
-        decimal:     4294967295
-        hexadecimal: FFFFFFFF
+        binary:      1111111111111111111111111111111111111111111111111111111111111111
+        octal:       01777777777777777777777
+        decimal:     18446744073709551615
+        hexadecimal: FFFFFFFFFFFFFFFF
 
     Values exceeding these limits are clamped to the maximum value.
 

@@ -5,13 +5,13 @@
 #include <cstdint>
 #include <utility>
 
-constexpr std::uint32_t UINT32_MAX_DIV10 = UINT32_MAX / 10;
-constexpr std::uint8_t UINT32_MAX_LSD = UINT32_MAX % 10;
+constexpr std::uint64_t UINT64_MAX_DIV10 = UINT64_MAX / 10;
+constexpr std::uint8_t UINT64_MAX_LSD = UINT64_MAX % 10;
 
-std::uint32_t convertFromBase(const std::string& inputNum, const Base base) {
+std::uint64_t convertFromBase(const std::string& inputNum, const Base base) {
     std::uint8_t baseVal = std::to_underlying(base);
 
-    std::uint32_t decimalNumber = 0;
+    std::uint64_t decimalNumber = 0;
     std::uint8_t digit;
     for (char c : inputNum) {
         if (c >= DEC_MIN && c <= DEC_MAX) {
@@ -22,7 +22,7 @@ std::uint32_t convertFromBase(const std::string& inputNum, const Base base) {
             digit = c - HEX_OFFSET_LOWER;
         }
 
-        if (decimalNumber >= (UINT32_MAX - digit) / baseVal ) return UINT32_MAX;
+        if (decimalNumber >= (UINT64_MAX - digit) / baseVal ) return UINT64_MAX;
 
         decimalNumber *= baseVal;
         decimalNumber += digit;
@@ -31,7 +31,7 @@ std::uint32_t convertFromBase(const std::string& inputNum, const Base base) {
     return decimalNumber;
 };
 
-std::string convertToBase(std::uint32_t decimalNumber, const Base base) {
+std::string convertToBase(std::uint64_t decimalNumber, const Base base) {
     if (decimalNumber == 0) return "0";
 
     std::uint8_t baseVal = std::to_underlying(base);
@@ -55,12 +55,12 @@ std::string convertToBase(std::uint32_t decimalNumber, const Base base) {
     return nonDecimalNumber;
 };
 
-std::uint32_t stringToUInt32(const std::string& string) {
-    std::uint32_t num = 0;
+std::uint64_t stringToUInt64(const std::string& string) {
+    std::uint64_t num = 0;
 
     for (char c : string) {
-        if ( num > UINT32_MAX_DIV10 || ( num == UINT32_MAX_DIV10 && (c - NUM_OFFSET) >= UINT32_MAX_LSD )) {
-            return UINT32_MAX;
+        if ( num > UINT64_MAX_DIV10 || ( num == UINT64_MAX_DIV10 && (c - NUM_OFFSET) >= UINT64_MAX_LSD )) {
+            return UINT64_MAX;
         }
 
         num *= 10;

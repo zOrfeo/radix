@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(radix VERSION 1.0 LANGUAGES CXX)
+project(radix VERSION 1.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -46,7 +46,7 @@ install(TARGETS ${PROJECT_NAME} DESTINATION bin)
 install(FILES docs/${PROJECT_NAME}.1
         DESTINATION share/man/man1
         COMPONENT man)
-        
+
 # ----------------------------
 # Unit tests (optional)
 # ----------------------------

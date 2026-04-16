@@ -96,18 +96,18 @@ Invalid prefix
 .B 4
 Invalid input
 .SH LIMITATIONS
-radix supports up to 32-bit unsigned integers.
+radix supports up to 64-bit (unsigned) integers.
 .PP
 Maximum values:
 .RS
 .TP
-binary:      11111111111111111111111111111111
+binary:      1111111111111111111111111111111111111111111111111111111111111111
 .TP
-octal:       037777777777
+octal:       01777777777777777777777
 .TP
-decimal:     4294967295
+decimal:     18446744073709551615
 .TP
-hexadecimal: FFFFFFFF
+hexadecimal: FFFFFFFFFFFFFFFF
 .RE
 .PP
 Values exceeding these limits are clamped to the maximum value.

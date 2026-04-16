@@ -76,7 +76,6 @@ man radix
 
 - Decimal is the default input and output base
 - Prefixes (`0b`, `0o`, `0x`) override the specified input base
-- Hexadecimal input currently requires uppercase letters (`A–F`)
 - When passing negative numbers via CLI, use `--`:
   ```bash
   radix -o bin -- -42
@@ -86,8 +85,8 @@ man radix
 
 ## Limitations
 
-- Supports up to 32-bit unsigned integers
-- Larger values are clamped to the maximum (`UINT32_MAX`)
+- Supports up to 64-bit unsigned integers
+- Larger values are clamped to the maximum (`UINT64_MAX`)
 
 ---
 
