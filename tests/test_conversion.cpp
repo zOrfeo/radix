@@ -36,10 +36,16 @@ TEST_CASE("Convert from Decimal", "[convert][decimal]") {
         CHECK(convertFromBase("4294967295", Base::DEC) == UINT32_MAX);
         // UINT32 + 1
         CHECK(convertFromBase("4294967296", Base::DEC) == 4294967296);
+        CHECK(convertFromBase("123", Base::DEC) == 123);
+        CHECK(convertFromBase("000123", Base::DEC) == 123);
+        CHECK(convertFromBase("123000", Base::DEC) == 123000);
+        CHECK(convertFromBase(std::to_string(UINT64_MAX), Base::DEC) == UINT64_MAX);
     }
 
-    SECTION("UINT32_MAX limited conversion") {
+    SECTION("UINT64_MAX limited conversion") {
         CHECK(convertFromBase("18446744073709551616", Base::DEC) == UINT64_MAX);
+        CHECK(convertFromBase("18446744073709551616", Base::DEC) == UINT64_MAX);
+        CHECK(convertFromBase("99999999999999999999", Base::DEC) == UINT64_MAX);
     }
 }
 
@@ -78,18 +84,4 @@ TEST_CASE("Convert to Decimal", "[convert][decimal]") {
 TEST_CASE("Convert to Hexadecimal", "[convert][hex]") {
     CHECK(convertToBase(10, Base::HEX) == "A");
     CHECK(convertToBase(255, Base::HEX) == "FF");
-}
-
-TEST_CASE("Convert String to UINT32", "[convert][decimal]") {
-    SECTION ("Normal Conversion") {
-        CHECK(stringToUInt64("123") == 123);
-        CHECK(stringToUInt64("000123") == 123);
-        CHECK(stringToUInt64("123000") == 123000);
-        CHECK(stringToUInt64(std::to_string(UINT64_MAX)) == UINT64_MAX);
-    }
-
-    SECTION("UINT32_MAX Limited conversion") {
-        CHECK(stringToUInt64("18446744073709551616") == UINT64_MAX);
-        CHECK(stringToUInt64("99999999999999999999") == UINT64_MAX);
-    }
 }

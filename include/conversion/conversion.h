@@ -7,6 +7,5 @@
 
 std::uint64_t convertFromBase(const std::string& inputNum, const Base base);
 std::string convertToBase(const std::uint64_t decimalNumber, const Base base);
-std::uint64_t stringToUInt64(const std::string& string);
 
 #endif
