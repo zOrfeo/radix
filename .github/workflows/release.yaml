@@ -16,10 +16,11 @@ jobs:
         run: |
           cmake -B build \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX=/usr
+            -DCMAKE_INSTALL_PREFIX=/usr \
+            -DBUILD_TESTING=OFF
 
       - name: Build
-        run: cmake --build build --parallel -DBUILD_TESTING=OFF
+        run: cmake --build build --parallel
 
       - name: Upload Binary Artefact
         uses: actions/upload-artifact@v4
