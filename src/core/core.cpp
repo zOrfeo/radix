@@ -28,16 +28,6 @@ std::pair<int, std::string> processInput(std::string& inputNum, Base inBase, Bas
         return {ALL_OK,inputNum};
     }
 
-    std::uint32_t decimalNumber;
-    if (inBase != Base::DEC){
-        decimalNumber = convertFromBase(inputNum,inBase);
-    } else {
-        decimalNumber = stringToUInt32(inputNum);
-    }
-
-    if (outBase != Base::DEC) {
-        return {ALL_OK,convertToBase(decimalNumber,outBase)};
-    } else {
-        return {ALL_OK,std::to_string(decimalNumber)};
-    }
+    std::uint64_t decimalNumber = convertFromBase(inputNum,inBase);
+    return {ALL_OK,convertToBase(decimalNumber,outBase)};
 }
